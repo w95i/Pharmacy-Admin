@@ -1,0 +1,41 @@
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { faTrash} from '@fortawesome/free-solid-svg-icons'
+import { faSliders} from '@fortawesome/free-solid-svg-icons'
+import { faEye} from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus} from '@fortawesome/free-solid-svg-icons'
+import { faStar} from '@fortawesome/free-solid-svg-icons'
+import { faGlobe} from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown} from '@fortawesome/free-solid-svg-icons'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faMobile } from '@fortawesome/free-solid-svg-icons'
+import { faClock } from '@fortawesome/free-solid-svg-icons'
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+
+library.add(faGoogle)
+library.add(faYoutube)
+library.add(faFacebook)
+library.add(faBars)
+library.add(faTrash)
+library.add(faCartShopping)
+library.add(faSliders)
+library.add(faEye)
+library.add(faCartPlus)
+library.add(faStar)
+library.add(faGlobe)
+library.add(faCaretDown)
+library.add(faXmark)
+library.add(faLocationDot)
+library.add(faEnvelope)
+library.add(faMobile)
+library.add(faClock)
+library.add(faCircleUser)
+export { FontAwesomeIcon }
