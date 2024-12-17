@@ -1,12 +1,13 @@
 <template>
   <div class="autocomplete_group">
     <slot name="label">
-      <label for="comboBox">Combo Box</label>
+      <label for="comboBox">{{ label }}</label>
     </slot>
     <div class="input-wrapper">
       <input
         id="comboBox"
         type="text"
+        v-bind="$attrs"
         v-model="searchQuery"
         @input="onInput"
         @focus="onFocus"
@@ -31,11 +32,15 @@
   </div>
 </template>
   
-  <script>
+<script>
 export default {
+  props: {
+    label: String,
+    value: [String, Number],
+  },
   data() {
     return {
-      searchQuery: "",
+      searchQuery: this.value || "",
       options: [
         "The Dark Knight",
         "Control with Control",
@@ -51,8 +56,9 @@ export default {
   },
   methods: {
     onInput() {
+      this.updateValue(this.searchQuery);
       if (this.searchQuery.trim() === "") {
-        this.filteredOptions = this.options; // Show all options if the input is empty
+        this.filteredOptions = this.options;
       } else {
         this.filteredOptions = this.options.filter((option) =>
           option.toLowerCase().includes(this.searchQuery.toLowerCase())
@@ -63,6 +69,7 @@ export default {
       this.searchQuery = option;
       this.filteredOptions = [];
       this.isFocused = false;
+      this.updateValue(option);
     },
     onFocus() {
       this.isFocused = true;
@@ -77,17 +84,18 @@ export default {
         }
       }, 150);
     },
+    updateValue(value) {
+      this.$emit("input", value); // Emit the 'input' event to the parent
+    },
   },
   watch: {
-    searchQuery(newQuery) {
-      if (!newQuery) {
-        this.filteredOptions = this.options; // Show all options when the search query is empty
-      }
+    value(newVal) {
+      this.searchQuery = newVal; // Sync changes when parent updates value
     },
   },
 };
 </script>
-  
+
   <style scoped>
 .autocomplete_group {
   display: flex;
