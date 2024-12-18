@@ -1,0 +1,62 @@
+ name: Deploy Customs-Front UAT Service
+
+ on:
+   push:
+     branches:
+       - main
+
+ jobs:
+   build:
+
+     runs-on: ubuntu-latest
+     env:
+       target: '/var/www/groupA/customs/frontend' # Enclose target path in single quotes
+       message: |
+              [${{ github.event.head_commit.committer.name }}](https://github.com/${{github.event.head_commit.committer.username}}) pushed new commit: 
+              `[ ${{github.event.head_commit.message}} ]` 
+              to [${{ github.event.repository.name }}](https://github.com/${{github.event.repository.html_url}}) 
+              You can now use it at http://customs.future-wave.co
+
+     strategy:
+       matrix:
+         node-version: [18.x]
+
+     steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2.4.2      
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install npm dependencies
+        run: yarn
+
+      - name: Build application
+        run: yarn run build
+
+      - name: Copy repository contents to remote server via scp
+        uses: appleboy/scp-action@master
+        with:
+           host: ${{ secrets.SSH_HOST }}
+           port: 22
+           username: ${{ secrets.SSH_USERNAME }}
+           password: ${{ secrets.SSH_PASSWORD }}
+           source: "./dist/"
+           target: ${{ env.target }}
+           debug: true # Enable debugging
+
+
+      - name: send notification to telegram
+        uses: appleboy/telegram-action@master
+        with:
+            to: -4710185717
+           #          to: 822950561
+
+            token: 6924975011:AAG2uOkV4Ah_4Zxqtccu9k6kRdFaULptHp8
+            message: ${{ env.message }}
+            format: markdown
+            disable_web_page_preview: true
+          
