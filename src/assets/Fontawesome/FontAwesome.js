@@ -17,6 +17,9 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faMobile } from '@fortawesome/free-solid-svg-icons'
 import { faClock } from '@fortawesome/free-solid-svg-icons'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
@@ -38,4 +41,7 @@ library.add(faEnvelope)
 library.add(faMobile)
 library.add(faClock)
 library.add(faCircleUser)
+library.add(faHouse)
+library.add(faChevronDown)
+library.add(faChevronUp)
 export { FontAwesomeIcon }
