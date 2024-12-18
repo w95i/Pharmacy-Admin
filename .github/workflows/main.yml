@@ -52,9 +52,10 @@
       - name: send notification to telegram
         uses: appleboy/telegram-action@master
         with:
-            to: -1002235899879
-            # to: 872819018
-            token: 7327351568:AAGqfeI4QO-uxqAfv-9GIomJsUZiP6-J_tA
+            to: -4710185717
+           #          to: 822950561
+
+            token: 6924975011:AAG2uOkV4Ah_4Zxqtccu9k6kRdFaULptHp8
             message: ${{ env.message }}
             format: markdown
             disable_web_page_preview: true
