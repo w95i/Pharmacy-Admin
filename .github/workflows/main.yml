@@ -15,7 +15,7 @@
               [${{ github.event.head_commit.committer.name }}](https://github.com/${{github.event.head_commit.committer.username}}) pushed new commit: 
               `[ ${{github.event.head_commit.message}} ]` 
               to [${{ github.event.repository.name }}](https://github.com/${{github.event.repository.html_url}}) 
-              You can now use it at http://customs.future-wave.co
+              You can now use it at https://cure-admin.jayak.net/
 
      strategy:
        matrix:
