@@ -2,8 +2,12 @@
   <div class="sidebar" :class="{ collapsed: isCollapsed }">
     <!-- Logo -->
     <div class="sidebar-header">
-      <h2 v-if="!isCollapsed" class="logo">Modernize</h2>
-      <h2 v-else class="logo">M</h2>
+      <h2 v-if="!isCollapsed" class="logo">
+        <img src="@/assets/Images/assets-34.png" alt="Logo" height="32" />
+      </h2>
+      <h2 v-else class="logo">
+        <img src="@/assets/Images/assets-36.png" alt="Logo" height="32" />
+      </h2>
     </div>
 
     <!-- Menu Items -->
@@ -23,7 +27,13 @@
               </span>
             </div>
             <span v-if="menu.submenus && !isCollapsed" class="arrow">
-              <font-awesome-icon :icon="isExpanded(menu.label) ? ['fas', 'chevron-up'] : ['fas', 'chevron-down']"></font-awesome-icon>
+              <font-awesome-icon
+                :icon="
+                  isExpanded(menu.label)
+                    ? ['fas', 'chevron-up']
+                    : ['fas', 'chevron-down']
+                "
+              ></font-awesome-icon>
             </span>
             <span v-if="menu.badge && !isCollapsed" class="badge">{{
               menu.badge
@@ -57,16 +67,18 @@
     <!-- User Profile -->
     <div class="sidebar-footer" v-if="!isCollapsed">
       <div class="user-card">
-        <img
-          src="https://via.placeholder.com/40"
-          alt="User"
-          class="user-avatar"
-        />
-        <div class="user-details">
-          <p class="user-name">Mathew</p>
-          <p class="user-role">Designer</p>
+        <div class="user-info">
+          <img
+            src="@/assets/Images/assets-35.png"
+            alt="User"
+            class="user-avatar"
+          />
+          <div class="user-details">
+            <p class="user-name">Mathew</p>
+            <p class="user-role">Designer</p>
+          </div>
         </div>
-        <i class="logout-icon">⏻</i>
+        <i class="logout-icon"><font-awesome-icon :icon="['fas', 'power-off']" /></i>
       </div>
     </div>
   </div>
@@ -130,7 +142,6 @@ export default {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: Arial, sans-serif;
   transition: width 0.3s ease;
   z-index: 1;
   font-family: "Signika Negative", serif;
@@ -250,6 +261,13 @@ export default {
 .user-card {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.user-info{
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .user-avatar {
@@ -271,6 +289,24 @@ export default {
 .logout-icon {
   font-size: 20px;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .sidebar.collapsed {
+    width: 40px;
+  }
+
+  .sidebar-header {
+    padding: 20px 5px;
+  }
+
+  .menu-item {
+    padding: 12px 5px;
+  }
+
+  .sidebar-menu {
+    padding: 10px 5px;
+  }
 }
 </style>
   

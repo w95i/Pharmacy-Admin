@@ -1,15 +1,20 @@
 <template>
-  <div class="app">
+  <div class="app" @click="closeDropdown">
     <SidebarComponent :isCollapsed="isSidebarCollapsed" />
     <div class="main-content">
-      <TopBarComponent @toggle-sidebar="toggleSidebar" />
+      <TopBarComponent 
+        @toggle-sidebar="toggleSidebar" 
+        @toggle-dropdown="toggleDropdown" 
+        @close-dropdown="closeDropdown" 
+        :showDropdown="showDropdown" 
+      />
       <div class="content">
         <router-view />
       </div>
     </div>
   </div>
 </template>
-  
+
 <script>
 import SidebarComponent from "@/components/SideBars/SidebarComponent.vue";
 import TopBarComponent from "@/components/SideBars/TopBar.vue";
@@ -19,18 +24,27 @@ export default {
   data() {
     return {
       isSidebarCollapsed: false,
+      showDropdown: false,
     };
   },
   methods: {
     toggleSidebar() {
       this.isSidebarCollapsed = !this.isSidebarCollapsed;
     },
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown;
+    },
+    closeDropdown() {
+      if (this.showDropdown) {
+        this.showDropdown = false;
+      }
+    },
   },
 };
 </script>
-  
-  <style scoped>
-  .app {
+
+<style scoped>
+.app {
   display: flex;
   height: 100vh;
 }
@@ -44,5 +58,4 @@ export default {
   padding: 20px;
   background-color: #FFFFFF;
 }
-  </style>
-  
+</style>
