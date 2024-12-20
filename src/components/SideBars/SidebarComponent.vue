@@ -74,8 +74,8 @@
             class="user-avatar"
           />
           <div class="user-details">
-            <p class="user-name">Mathew</p>
-            <p class="user-role">Designer</p>
+            <p class="user-name">Waeel</p>
+            <p class="user-role">Developer</p>
           </div>
         </div>
         <i class="logout-icon"><font-awesome-icon :icon="['fas', 'power-off']" /></i>
@@ -196,10 +196,10 @@ export default {
 }
 
 .menu-item:hover {
-  color: #054ff0;
+  color: var(--primary-color);
 }
 .menu-item.active {
-  background-color: #054ff0;
+  background-color: var(--primary-color);
   color: #fff;
 }
 

@@ -3,10 +3,12 @@
     <SidebarComponent :isCollapsed="isSidebarCollapsed" />
     <div class="main-content">
       <TopBarComponent 
-        @toggle-sidebar="toggleSidebar" 
-        @toggle-dropdown="toggleDropdown" 
-        @close-dropdown="closeDropdown" 
-        :showDropdown="showDropdown" 
+        @toggle-sidebar="toggleSidebar"
+        @toggle-dropdown="toggleDropdown"
+        @toggle-notification="toggleNotification"
+        @close-dropdown="closeDropdown"
+        :showDropdown="showDropdown"
+        :showNotification="showNotification"
       />
       <div class="content">
         <router-view />
@@ -25,6 +27,7 @@ export default {
     return {
       isSidebarCollapsed: false,
       showDropdown: false,
+      showNotification: false,
     };
   },
   methods: {
@@ -34,9 +37,15 @@ export default {
     toggleDropdown() {
       this.showDropdown = !this.showDropdown;
     },
+    toggleNotification() {
+      this.showNotification = !this.showNotification;
+    },
     closeDropdown() {
       if (this.showDropdown) {
         this.showDropdown = false;
+      }
+      if (this.showNotification) {
+        this.showNotification = false;
       }
     },
   },
