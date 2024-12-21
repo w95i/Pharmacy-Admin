@@ -1,12 +1,12 @@
 <template>
-  <div class="profile-container" @click.stop="toggleDropdown">
+  <div class="profile-container" @click.stop="toggleProfile">
     <img
       src="@/assets/Images/assets-35.png"
       alt="Profile"
       height="38"
       style="border-radius: 50%; cursor: pointer"
     />
-    <div v-if="toggleShowDropdown" class="profile-dropdown">
+    <div v-if="languageStore.showDropdown" class="profile-dropdown">
       <div class="profile_information">
         <p>User Profile</p>
         <div class="profile_content">
@@ -70,36 +70,25 @@
 </template>
 
 <script>
+import { useLanguageStore } from "@/Stores/LanguageStore";
 export default {
-  emits: ["toggle-dropdown", "logout"],
-  props: {
-    showDropdown: {
-      type: Boolean,
-      default: false,
-    },
+  setup(){
+    const languageStore = useLanguageStore();
+
+    const toggleProfile = () => {
+      languageStore.toggleDropdown();
+    }
+
+    return{
+      languageStore,
+      toggleProfile
+    }
   },
-  data() {
-    return {
-      toggleShowDropdown: this.showDropdown,
-    };
-  },
-  watch: {
-    showDropdown(newValue) {
-      this.toggleShowDropdown = newValue;
-    },
-  },
-  methods: {
-    toggleDropdown() {
-      this.toggleShowDropdown = !this.toggleShowDropdown;
-      this.$emit("toggle-dropdown", this.toggleShowDropdown);
-    },
+  methods:{
     navigateTo(page) {
       this.$router.push({ name: page });
     },
-    logout() {
-      alert("Logged out");
-    },
-  },
+  }
 };
 </script>
 

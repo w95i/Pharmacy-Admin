@@ -22,9 +22,7 @@
           >
             <div class="menu-item-title">
               <font-awesome-icon :icon="menu.icon" />
-              <span v-if="!isCollapsed">
-                {{ menu.label }}
-              </span>
+              <span v-if="!isCollapsed"> {{ $t(menu.label) }} </span>
             </div>
             <span v-if="menu.submenus && !isCollapsed" class="arrow">
               <font-awesome-icon
@@ -57,7 +55,7 @@
             @click.stop="setActiveSubmenu(submenu.label)"
           >
             <router-link :to="submenu.path || '#'" class="submenu-link">
-              {{ submenu.label }}
+              {{ $t(submenu.label) }}
             </router-link>
           </div>
         </div>
@@ -78,14 +76,25 @@
             <p class="user-role">Developer</p>
           </div>
         </div>
-        <i class="logout-icon"><font-awesome-icon :icon="['fas', 'power-off']" /></i>
+        <i class="logout-icon"
+          ><font-awesome-icon :icon="['fas', 'power-off']"
+        /></i>
       </div>
     </div>
   </div>
 </template>
   
   <script>
+import { useI18n } from "vue-i18n";
 export default {
+  setup() {
+    const { t, locale } = useI18n();
+
+    return {
+      t,
+      locale,
+    };
+  },
   name: "SidebarComponent",
   props: {
     isCollapsed: Boolean, // Controlled by parent component
@@ -96,7 +105,7 @@ export default {
       activeSubmenu: null,
       menus: [
         {
-          label: "Modern",
+          label: "home",
           path: "/",
           icon: ["fas", "house"],
           textBadge: "New",
@@ -108,7 +117,7 @@ export default {
           label: "Blog",
           icon: "🕒",
           submenus: [
-            { label: "Posts", path: "/blog/posts" },
+            { label: "posts", path: "/blog/posts" },
             { label: "Detail", path: "/blog/detail" },
           ],
         },
@@ -264,7 +273,7 @@ export default {
   justify-content: space-between;
 }
 
-.user-info{
+.user-info {
   display: flex;
   align-items: center;
   gap: 10px;

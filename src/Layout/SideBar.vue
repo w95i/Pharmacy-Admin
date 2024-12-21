@@ -2,13 +2,8 @@
   <div class="app" @click="closeDropdown">
     <SidebarComponent :isCollapsed="isSidebarCollapsed" />
     <div class="main-content">
-      <TopBarComponent 
+      <TopBarComponent
         @toggle-sidebar="toggleSidebar"
-        @toggle-dropdown="toggleDropdown"
-        @toggle-notification="toggleNotification"
-        @close-dropdown="closeDropdown"
-        :showDropdown="showDropdown"
-        :showNotification="showNotification"
       />
       <div class="content">
         <router-view />
@@ -20,35 +15,32 @@
 <script>
 import SidebarComponent from "@/components/SideBars/SidebarComponent.vue";
 import TopBarComponent from "@/components/SideBars/TopBar.vue";
+import { useLanguageStore } from "@/Stores/LanguageStore";
 
 export default {
   components: { SidebarComponent, TopBarComponent },
   data() {
     return {
       isSidebarCollapsed: false,
-      showDropdown: false,
-      showNotification: false,
     };
   },
   methods: {
     toggleSidebar() {
       this.isSidebarCollapsed = !this.isSidebarCollapsed;
     },
-    toggleDropdown() {
-      this.showDropdown = !this.showDropdown;
-    },
-    toggleNotification() {
-      this.showNotification = !this.showNotification;
-    },
-    closeDropdown() {
-      if (this.showDropdown) {
-        this.showDropdown = false;
-      }
-      if (this.showNotification) {
-        this.showNotification = false;
-      }
-    },
   },
+  setup(){
+    const languageStore = useLanguageStore();
+
+    const closeDropdown = () => {
+      languageStore.closeDropdown();
+    }
+
+    return{
+      languageStore,
+      closeDropdown
+    }
+  }
 };
 </script>
 
@@ -65,6 +57,6 @@ export default {
 .content {
   flex: 1;
   padding: 20px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 </style>

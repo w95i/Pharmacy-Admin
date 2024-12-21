@@ -1,10 +1,10 @@
 <template>
-  <div class="notification-container" @click.stop="toggleNotification">
+  <div class="notification-container" @click.stop="toggleNotifications">
     <span class="icon_wrapper">
       <font-awesome-icon :icon="['fas', 'bell']" />
       <span class="icon_badge" v-if="notificationsList.length>0"></span>
     </span>
-    <div v-if="toggleShowNotification" class="notification-dropdown">
+    <div v-if="languageStore.showNotification" class="notification-dropdown">
       <div class="notification_information">
         <p>Notifications</p>
         <span class="badge">{{ notificationsList.length }} New</span>
@@ -33,17 +33,10 @@
 
 
 <script>
+import { useLanguageStore } from "@/Stores/LanguageStore";
 export default {
-  emits: ["toggle-notification"],
-  props: {
-    showNotification: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
-      toggleShowNotification: this.showNotification,
       notificationsList: [
       {
           id: 1,
@@ -97,17 +90,18 @@ export default {
       ],
     };
   },
-  watch: {
-    showNotification(newValue) {
-      this.toggleShowNotification = newValue;
-    },
-  },
-  methods: {
-    toggleNotification() {
-      this.toggleShowNotification = !this.toggleShowNotification;
-      this.$emit("toggle-notification", this.toggleShowNotification);
-    },
-  },
+  setup(){
+    const languageStore = useLanguageStore();
+
+    const toggleNotifications = () => {
+      languageStore.toggleNotification();
+    }
+
+    return {
+      languageStore,
+      toggleNotifications,
+    }
+  }
 };
 </script>
 
@@ -121,6 +115,10 @@ export default {
   background-color: #dfdfdf;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.icon_wrapper:hover {
+    background-color: #cacaca;
 }
 
 .icon_badge {

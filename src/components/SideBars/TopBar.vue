@@ -1,11 +1,11 @@
 <template>
   <div class="topbar" @click="closeDropdown">
     <button class="toggle-btn" @click.stop="toggleSidebar">☰</button>
-    <h2>{{ currentPage }}</h2>
+    <h2>{{ $t(currentPage) }}</h2>
     <div class="topbar-icons">
-      <span>🌙</span>
-      <NotificationSection :showNotification="toggleShowNotification" @toggle-notification="toggleNotification" />
-      <ProfileSection :showDropdown="toggleShowDropdown" @toggle-dropdown="toggleDropdown"/>
+      <LanguageSection />
+      <NotificationSection />
+      <ProfileSection />
     </div>
   </div>
 </template>
@@ -13,53 +13,17 @@
 <script>
 import ProfileSection from './ProfileSection.vue';
 import NotificationSection from './NotificationSection.vue';
+import LanguageSection from './LanguageSection.vue';
 export default {
-  emits: ["toggle-sidebar", "toggle-dropdown", "toggle-notification" , "close-dropdown"],
-  props: {
-    showDropdown: {
-      type: Boolean,
-      default: false,
-    },
-    showNotification:{
-      type: Boolean,
-      default: false,
-    }
-  },
+  emits: ["toggle-sidebar"],
   components: {
     ProfileSection,
-    NotificationSection
-  },
-  data() {
-    return {
-      toggleShowDropdown: this.showDropdown,
-      toggleShowNotification: this.showNotification,
-    };
-  },
-  watch: {
-    showDropdown(newValue) {
-      this.toggleShowDropdown = newValue;
-    },
-    showNotification(newValue) {
-      this.toggleShowNotification = newValue;
-    },
+    NotificationSection,
+    LanguageSection
   },
   methods: {
     toggleSidebar() {
       this.$emit("toggle-sidebar");
-    },
-    toggleDropdown() {
-      this.toggleShowDropdown = !this.toggleShowDropdown;
-      this.$emit("toggle-dropdown", this.toggleShowDropdown);
-    },
-    toggleNotification() {
-      this.toggleShowNotification = !this.toggleShowNotification;
-      this.$emit("toggle-notification", this.toggleShowNotification);
-    },
-    closeDropdown() {
-      if (this.toggleShowDropdown) {
-        this.toggleShowDropdown = false;
-        this.$emit("close-dropdown");
-      }
     },
   },
   computed: {
@@ -89,7 +53,7 @@ export default {
 .topbar-icons {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
   padding: 0 15px;
 }
 .topbar-icons span {
