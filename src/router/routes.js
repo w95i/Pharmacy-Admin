@@ -10,6 +10,23 @@ const routes = [
         path: '/about',
         name: 'about',
         component: () => import('../views/AboutView.vue')
+      },
+      {
+        path: '/pharmacy',
+        name: 'pharmacy',
+        redirect:'/pharmacy/pharmacy-list',
+        children:[
+          {
+            path: 'pharmacy-list',
+            name: 'pharmacy-list',
+            component: () => import('/')
+          },
+          {
+            path: 'create-group',
+            name: 'create-pharmacy',
+            component: () => import('/')
+          }
+        ]
       }
 ];
 

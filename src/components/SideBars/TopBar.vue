@@ -1,7 +1,9 @@
 <template>
-  <div class="topbar" @click="closeDropdown">
+  <div class="topbar">
     <button class="toggle-btn" @click.stop="toggleSidebar">☰</button>
-    <h2>{{ $t(currentPage) }}</h2>
+    <h2 :style="{
+        fontFamily: languageFont
+      }">{{ $t(currentPage) }}</h2>
     <div class="topbar-icons">
       <LanguageSection />
       <NotificationSection />
@@ -14,6 +16,7 @@
 import ProfileSection from './ProfileSection.vue';
 import NotificationSection from './NotificationSection.vue';
 import LanguageSection from './LanguageSection.vue';
+import { useLanguageStore } from "@/Stores/LanguageStore";
 export default {
   emits: ["toggle-sidebar"],
   components: {
@@ -30,7 +33,20 @@ export default {
     currentPage() {
       return this.$route.name || "Home";
     },
+    languageFont() {
+      return this.languageStore.selectedLanguage === 'en' 
+          ? 'var(--jakarta-font)' 
+          : 'var(--cairo-font)'
+    }
+
   },
+  setup(){
+    const languageStore = useLanguageStore();
+
+    return{
+      languageStore
+    }
+  }
 };
 </script>
 

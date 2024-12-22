@@ -110,7 +110,15 @@ export default {
           icon: ["fas", "house"],
           textBadge: "New",
         },
-        { label: "eCommerce", path: "/about", icon: "🛒" },
+        {
+          label: "pharmacy",
+          path: "/pharmacy/pharmacy-list",
+          icon: ["fas", "hospital"],
+          submenus: [
+            { label: "pharmacy-list", path: "/pharmacy/pharmacy-list" },
+            { label: "create-pharmacy", path: "/pharmacy/create-group" },
+          ],
+        },
         { label: "Front Pages", path: "/front-pages", icon: "📄" },
         { label: "Contact", path: "/contact", icon: "📦", badge: "2" },
         {
@@ -298,6 +306,9 @@ export default {
 .logout-icon {
   font-size: 20px;
   cursor: pointer;
+}
+.logout-icon:hover svg {
+  color: red;
 }
 
 @media (max-width: 768px) {

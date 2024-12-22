@@ -58,5 +58,27 @@ export default {
   flex: 1;
   padding: 20px;
   background-color: #ffffff;
+  overflow: auto;
+}
+
+.content::-webkit-scrollbar {
+  width: 5px;
+  padding: 10px 0;
+}
+
+.content::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: var(--icon-color);
+  border-radius: 10px;
+  padding: 10px 0;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+  border-radius: 10px;
 }
 </style>

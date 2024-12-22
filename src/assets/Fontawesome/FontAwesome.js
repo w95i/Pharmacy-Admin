@@ -24,6 +24,7 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons'
 import { faGears } from '@fortawesome/free-solid-svg-icons'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
+import { faHospital } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
@@ -52,4 +53,5 @@ library.add(faChevronUp)
 library.add(faPowerOff)
 library.add(faGears)
 library.add(faBell)
+library.add(faHospital)
 export { FontAwesomeIcon }
