@@ -19,7 +19,7 @@ const routes = [
           {
             path: 'pharmacy-list',
             name: 'pharmacy-list',
-            component: () => import('/')
+            component: () => import('@/views/Pharmacy/PharmacyList.vue')
           },
           {
             path: 'create-group',

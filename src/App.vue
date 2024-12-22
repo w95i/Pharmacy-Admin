@@ -22,4 +22,9 @@ components:{
 #app {
   width: 100%;
 }
+
+.page_container{
+  width: 80%;
+  margin: 0 auto;
+}
 </style>

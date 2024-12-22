@@ -58,7 +58,8 @@ export default {
   flex: 1;
   padding: 20px;
   background-color: #ffffff;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .content::-webkit-scrollbar {
