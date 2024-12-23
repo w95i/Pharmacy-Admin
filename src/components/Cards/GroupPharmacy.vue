@@ -1,8 +1,21 @@
 <template>
   <div>
-    <div class="card_group_container">
+    <div v-if="loading" class="loading-container">
+      <img
+        src="@/assets/Images/Logo-36-300.png"
+        alt="Loading"
+        class="loading-logo"
+      />
+    </div>
+    <div
+      v-else
+      class="card_group_container"
+      v-for="pharmacy in pharmacyList"
+      :key="pharmacy.id"
+    >
+      <EllipsisAction class="ellipsis_action" />
       <div class="card_image">
-        <img src="@/assets/Images/assets-35.png" alt="image" />
+        <img src="@/assets/Images/Logo-35-350.png" alt="image" />
         <img
           src="https://modernize-vuejs.adminmart.com/assets/user-1-CznVQ9Sv.jpg"
           class="user_image"
@@ -16,14 +29,14 @@
         <p>{{ checkExpire ? "Expired" : "Active" }}</p>
       </div>
       <div class="card_content">
-        <h3>Waeel Mohammed</h3>
+        <h3>{{ pharmacy.name }}</h3>
         <p>
           <span><font-awesome-icon :icon="['fas', 'circle-user']" /></span>
-          Waeel Mohammed
+          {{ pharmacy.owner.fullName }}
         </p>
         <p>
           <span><font-awesome-icon :icon="['fas', 'envelope']" /></span>
-          waeel.moh97@gmail.com
+          {{ pharmacy.owner.userName }}
         </p>
         <p>
           <span><font-awesome-icon :icon="['fas', 'phone']" /></span>
@@ -41,8 +54,26 @@
 </template>
 
 <script>
+import EllipsisAction from "../EllipsisAction.vue";
 export default {
   name: "card-group",
+  props: {
+    pharmacyList: {
+      type: Array,
+      required: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    error: {
+      type: String,
+      default: "",
+    },
+  },
+  components: {
+    EllipsisAction,
+  },
   data() {
     return {
       expireDate: "21/12/2024, 11:55:36",
@@ -100,7 +131,6 @@ export default {
   border-radius: 10px;
   background-color: #eeeeee;
   transition: transform 0.3s ease;
-  overflow: hidden;
   cursor: pointer;
 }
 
@@ -118,6 +148,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 10px 10px 0 0;
 }
 
 .card_image .user_image {
@@ -161,6 +192,18 @@ export default {
   color: #666666;
 }
 
+.ellipsis_action {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 5px;
+  border-radius: 15px;
+  font-size: 18px;
+  font-family: var(--jakarta-font);
+  font-weight: 600;
+  z-index: 5;
+}
+
 .status_badge {
   position: absolute;
   top: 15px;
@@ -186,5 +229,26 @@ export default {
 
 .status_badge .expire {
   color: red;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.loading-logo {
+  width: 100px; /* Adjust size as needed */
+  animation: rotateLogo 2s linear infinite; /* Infinite rotation */
+}
+
+@keyframes rotateLogo {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

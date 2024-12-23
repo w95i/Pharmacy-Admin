@@ -11,6 +11,7 @@ import { faCartPlus} from '@fortawesome/free-solid-svg-icons'
 import { faStar} from '@fortawesome/free-solid-svg-icons'
 import { faGlobe} from '@fortawesome/free-solid-svg-icons'
 import { faCaretDown} from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisVertical} from '@fortawesome/free-solid-svg-icons'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -42,6 +43,7 @@ library.add(faCartPlus)
 library.add(faStar)
 library.add(faGlobe)
 library.add(faCaretDown)
+library.add(faEllipsisVertical)
 library.add(faXmark)
 library.add(faLocationDot)
 library.add(faEnvelope)

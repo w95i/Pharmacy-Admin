@@ -4,7 +4,7 @@
         <h1>{{ title }}</h1>
         <p>{{ path }}</p>
     </div>
-    <img src="@/assets/Images/assets-36.png" alt="logo">
+    <img src="@/assets/Images/Logo-36-300.png" alt="logo">
   </div>
 </template>
 
@@ -53,14 +53,14 @@ export default {
     }
 
     .card_container img {
-        width: 250px;
-        height: 250px;
+        width: 180px;
+        height: 180px;
         object-fit: cover;
         border-radius: 50%;
         position: absolute;
-        top: 70%;
-        right: -40px;
-        transform: translate(0,-50%);
+        top: 65%;
+        right: -10px;
+        transform: translateY(-50%);
         filter: drop-shadow(1px -2px 3px #00000080);
     }
 </style>
