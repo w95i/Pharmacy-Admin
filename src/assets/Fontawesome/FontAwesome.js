@@ -15,7 +15,9 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faMobile } from '@fortawesome/free-solid-svg-icons'
+import { faPhone } from '@fortawesome/free-solid-svg-icons'
 import { faClock } from '@fortawesome/free-solid-svg-icons'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
@@ -44,7 +46,9 @@ library.add(faXmark)
 library.add(faLocationDot)
 library.add(faEnvelope)
 library.add(faMobile)
+library.add(faPhone)
 library.add(faClock)
+library.add(faCircle)
 library.add(faCircleUser)
 library.add(faUser)
 library.add(faHouse)
