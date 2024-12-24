@@ -19,7 +19,14 @@ const routes = [
           {
             path: 'pharmacy-list',
             name: 'pharmacy-list',
-            component: () => import('@/views/Pharmacy/PharmacyList.vue')
+            component: () => import('@/views/Pharmacy/PharmacyList.vue'),
+            children:[
+              {
+                path: 'pharmacy-group/:id',
+                name: 'pharmacy-group',
+                component: () => import('@/views/Pharmacy/PharmacyGroup.vue'),
+              }
+            ]
           },
           {
             path: 'create-group',

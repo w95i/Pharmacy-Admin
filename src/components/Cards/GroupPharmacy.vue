@@ -13,7 +13,7 @@
       v-for="pharmacy in pharmacyList"
       :key="pharmacy.id"
     >
-      <EllipsisAction class="ellipsis_action" />
+      <!-- <EllipsisAction class="ellipsis_action" /> -->
       <div class="card_image">
         <img src="@/assets/Images/Logo-35-350.png" alt="image" />
         <img
@@ -29,7 +29,7 @@
         <p>{{ checkExpire ? "Expired" : "Active" }}</p>
       </div>
       <div class="card_content">
-        <h3>{{ pharmacy.name }}</h3>
+        <router-link :to="`/pharmacy/pharmacy-list/pharmacy-group/${pharmacy.id}`"><h3>{{ pharmacy.name }}</h3></router-link>
         <p>
           <span><font-awesome-icon :icon="['fas', 'circle-user']" /></span>
           {{ pharmacy.owner.fullName }}
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import EllipsisAction from "../EllipsisAction.vue";
+// import EllipsisAction from "../EllipsisAction.vue";
 export default {
   name: "card-group",
   props: {
@@ -71,9 +71,9 @@ export default {
       default: "",
     },
   },
-  components: {
-    EllipsisAction,
-  },
+  // components: {
+  //   EllipsisAction,
+  // },
   data() {
     return {
       expireDate: "21/12/2024, 11:55:36",
@@ -131,11 +131,14 @@ export default {
   border-radius: 10px;
   background-color: #eeeeee;
   transition: transform 0.3s ease;
-  cursor: pointer;
 }
 
 .card_group_container:hover {
   transform: scale(1.05);
+}
+
+.card_group_container:hover .card_content a{
+  color: var(--primary-color);
 }
 
 .card_group_container .card_image {
@@ -165,6 +168,12 @@ export default {
   width: 100%;
   font-family: var(--jakarta-font);
   text-align: start;
+}
+
+.card_content a{
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
 }
 
 .card_content h3 {

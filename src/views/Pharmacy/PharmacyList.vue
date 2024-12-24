@@ -1,9 +1,12 @@
 <template>
-  <div class="page_container">
+  <div class="page_container" v-if="!isGroupView">
     <PageHeader title="Pharmacy List" path="DashBoard • Pharmacy • Pharmacy List"/>
     <div class="groups_wrapper">
         <GroupPharmacy :pharmacyList="pharmacyList" :loading="loading" :error="error"/>
     </div>
+  </div>
+  <div class="page_container" v-else>
+    <router-view />
   </div>
 </template>
 
@@ -34,6 +37,9 @@ export default {
     },
     error() {
       return this.pharmacyListStore.error;
+    },
+    isGroupView() {
+      return this.$route.name === 'pharmacy-group';
     },
   },
 };

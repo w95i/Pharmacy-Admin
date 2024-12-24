@@ -13,7 +13,7 @@ export const usePharmacyListStore = defineStore('pharmacy-list', {
       this.error = null;
 
       const loadingTimer = new Promise((resolve) => {
-        setTimeout(resolve, 5000); // Ensure loading lasts at least 5 seconds
+        setTimeout(resolve, 1000);
       });
 
       try {

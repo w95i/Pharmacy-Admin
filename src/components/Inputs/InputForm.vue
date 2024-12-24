@@ -34,7 +34,6 @@
     padding: 5px 10px;
   }
   .input_group input {
-    background-color: transparent;
     width: 90%;
     padding: 12px 16px;
     border-radius: 8px;
