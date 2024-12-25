@@ -1,9 +1,18 @@
 {
-    "home": "Home",
-    "posts": "Posts",
-    "pharmacy": "Pharmacies",
-    "create-pharmacy": "New Pharmacy",
-    "pharmacy-list": "Pharmacies List",
-    "pharmacy-group": "Pharmacy Group"
-  }
-  
+  "home": "Home",
+  "posts": "Posts",
+  "pharmacy": "Pharmacies",
+  "create-pharmacy": "New Pharmacy",
+  "pharmacy-list": "Pharmacies List",
+  "pharmacy-group": "Pharmacy Group",
+  "nothing": "Nothing",
+  "pharmacy-name": "Pharmacy Name",
+  "location": "Location",
+  "address" : "Address",
+  "latitude" : "Latitude",
+  "longitude" : "Longitude",
+  "price" : "Subscription Price",
+  "discount" : "Discount",
+  "expire-date" : "Subscription Expire Date",
+  "submit" : "Submit"
+}

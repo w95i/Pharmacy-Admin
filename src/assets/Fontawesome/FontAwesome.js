@@ -9,6 +9,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { faSliders} from '@fortawesome/free-solid-svg-icons'
 import { faEye} from '@fortawesome/free-solid-svg-icons'
 import { faCartPlus} from '@fortawesome/free-solid-svg-icons'
+import { faPlus} from '@fortawesome/free-solid-svg-icons'
 import { faStar} from '@fortawesome/free-solid-svg-icons'
 import { faGlobe} from '@fortawesome/free-solid-svg-icons'
 import { faCaretDown} from '@fortawesome/free-solid-svg-icons'
@@ -28,6 +29,7 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons'
 import { faGears } from '@fortawesome/free-solid-svg-icons'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
+import { faX } from '@fortawesome/free-solid-svg-icons'
 import { faHospital } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -42,6 +44,7 @@ library.add(faCartShopping)
 library.add(faSliders)
 library.add(faEye)
 library.add(faCartPlus)
+library.add(faPlus)
 library.add(faStar)
 library.add(faGlobe)
 library.add(faCaretDown)
@@ -61,5 +64,6 @@ library.add(faChevronUp)
 library.add(faPowerOff)
 library.add(faGears)
 library.add(faBell)
+library.add(faX)
 library.add(faHospital)
 export { FontAwesomeIcon }

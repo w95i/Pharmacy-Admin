@@ -4,5 +4,16 @@
   "pharmacy": "الصيدليات",
   "create-pharmacy": "صيدلية جديدة",
   "pharmacy-list": "قائمة الصيدليات",
-  "pharmacy-group": "مجموعة الصيدليات"
+  "pharmacy-group": "مجموعة الصيدليات",
+  "nothing" : "لا يوجد",
+  "pharmacy-name": "اسم الصيدلية",
+  "location": "الموقع",
+  "address" : "العنوان",
+  "latitude" : "خط العرض",
+  "longitude" : "خط الطول",
+  "price" : "سعر الاشتراك",
+  "discount" : "الخصم",
+  "expire-date" : "تاريخ انتهاء الاشتراك",
+  "submit" : "إرسال"
+
 }

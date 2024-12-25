@@ -5,50 +5,58 @@
   />
   <div v-if="loading" class="loading-container">
     <img
-      src="@/assets/Images/Logo-36-300.png"
+      src="@/assets/Images/assets-36.png"
       alt="Loading"
       class="loading-logo"
     />
   </div>
-  <div class="group-container" v-else>
-    <div class="image_section">
-      <img src="@/assets/Images/assets-35.png" alt="User Image" />
-    </div>
-    <div class="owner_section">
-      <h2>Owner Data</h2>
-      <hr
-        style="
-          border-color: #ccc;
-          opacity: 1;
-          border-style: solid;
-          border-width: thin 0 0 0;
-          height: 0px;
-          width: 30%;
-          margin: 5px 3px;
-        "
-      />
-      <div class="owner_data">
-        <div class="data_wrapper">
-          <div class="data_labels">
-            <p class="title">Full Name</p>
-            <p class="value">Waeel Mohammed</p>
+  <div v-else>
+    <div class="group-container">
+      <div class="image_section">
+        <img :src="imagePath" alt="User Image" />
+      </div>
+      <div class="owner_section">
+        <h2>Owner Data</h2>
+        <hr
+          style="
+            border-color: #ccc;
+            opacity: 1;
+            border-style: solid;
+            border-width: thin 0 0 0;
+            height: 0px;
+            width: 30%;
+            margin: 5px 3px;
+          "
+        />
+        <div class="owner_data">
+          <div class="data_wrapper">
+            <div class="data_labels">
+              <p class="title">Full Name</p>
+              <p class="value">{{ pharmacyGroup.owner.fullName }}</p>
+            </div>
+            <div class="data_labels">
+              <p class="title">Email Address</p>
+              <p class="value">{{ pharmacyGroup.owner.userName }}</p>
+            </div>
           </div>
-          <div class="data_labels">
-            <p class="title">Email Address</p>
-            <p class="value">waeel.moh97@gmail.com</p>
-          </div>
-        </div>
-        <div class="data_wrapper">
-          <div class="data_labels">
-            <p class="title">Phone Number</p>
-            <p class="value">+9647733842780</p>
+          <div class="data_wrapper">
+            <div class="data_labels">
+              <p class="title">Phone Number</p>
+              <p class="value">
+                {{
+                  pharmacyGroup.owner.phoneNumber === null
+                    ? $t("nothing")
+                    : pharmacyGroup.owner.phoneNumber
+                }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="pharmacies_section">
-    <PharmacyTable :Pharmacies="pharmacyGroup.pharmacies" />
+    <div class="pharmacies_section">
+      <PharmacyTable :Pharmacies="pharmacyGroup.pharmacies" :groupId="pharmacyGroup.id" />
+    </div>
   </div>
 </template>
 
@@ -83,6 +91,12 @@ export default {
     },
     error() {
       return this.pharmacyListStore.error;
+    },
+    imagePath() {
+      const ownerImage = this.pharmacyGroup.owner?.image;
+      return ownerImage
+        ? `https://api.jayak.net/${ownerImage}`
+        : require("@/assets/Images/Logo-35-350.png");
     },
   },
 };
@@ -156,5 +170,26 @@ export default {
   box-shadow: #919eab4d 0 0 2px, #919eab1f 0 12px 24px -4px !important;
   padding: 20px;
   border-radius: 10px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.loading-logo {
+  width: 100px; /* Adjust size as needed */
+  animation: rotateLogo 2s linear infinite; /* Infinite rotation */
+}
+
+@keyframes rotateLogo {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

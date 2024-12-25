@@ -1,9 +1,10 @@
 <template>
+  <AddPharmacy v-if="ShowAddPharmacy" @close-popup="toggleContact" :groupId="groupId" />
   <div class="editable-table">
     <div class="header">
       <h2>Pharmacies Table</h2>
-      <button @click="addContact" class="add-button">
-        <i class="fas fa-user-plus"></i> Add Pharmacy
+      <button @click="toggleContact" class="add-button">
+        <font-awesome-icon :icon="['fas', 'plus']" /> Add Pharmacy
       </button>
     </div>
     <input
@@ -25,7 +26,7 @@
       </thead>
       <tbody>
         <tr v-for="(contact, index) in Pharmacies" :key="contact.id">
-          <td>{{ index+1 }}</td>
+          <td>{{ index + 1 }}</td>
           <td>
             <div class="user-info">
               <div>
@@ -55,12 +56,20 @@
 </template>
   
   <script>
+import AddPharmacy from "@/components/PopUp/AddPharmacy.vue";
 export default {
-  props:{
-    Pharmacies:{
-      type:Array,
-      default:() => []
+  props: {
+    Pharmacies: {
+      type: Array,
+      default: () => [],
+    },
+    groupId:{
+      type: String,
+      default: null
     }
+  },
+  components:{
+    AddPharmacy
   },
   data() {
     return {
@@ -85,9 +94,10 @@ export default {
           joiningDate: "12-10-2014",
           role: "Designer",
           roleClass: "designer",
-        }
-        // Add more contact data here
+        },
       ],
+      ShowAddPharmacy: false,
+      ShowEditPharmacy: false,
     };
   },
   computed: {
@@ -100,8 +110,8 @@ export default {
     },
   },
   methods: {
-    addContact() {
-      alert("Add contact functionality here.");
+    toggleContact() {
+      this.ShowAddPharmacy = !this.ShowAddPharmacy;
     },
     editContact(id) {
       alert(`Edit contact with ID: ${id}`);
@@ -157,15 +167,20 @@ td {
   padding: 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  text-align: center;
 }
-.action-buttons{
+.action-buttons {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 15px;
   height: 65px;
 }
-tr{
-    height: 65px;
+tr {
+  height: 65px;
+}
+tr:hover {
+  background-color: #f8f8f8;
 }
 .user-info {
   display: flex;
