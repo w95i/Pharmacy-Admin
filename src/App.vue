@@ -1,12 +1,20 @@
 <template>
-  <SideBar />
+  <SideBar v-if="!loginPage"/>
+  <LoginView v-else />
 </template>
 
 <script>
 import SideBar from './Layout/SideBar.vue';
+import LoginView from './views/LoginView.vue';
 export default{
 components:{
   SideBar,
+  LoginView
+},
+computed: {
+  loginPage() {
+    return this.$route.path === "/login";
+  }
 }
 }
 </script>

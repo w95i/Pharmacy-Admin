@@ -4,6 +4,7 @@ import axiosData from '@/Axios';
 export const usePharmacyListStore = defineStore('pharmacy-list', {
   state: () => ({
     PharmacyList: [],
+    PharmacyGroupItem:{},
     loading: false,
     error: null,
   }),
@@ -32,5 +33,27 @@ export const usePharmacyListStore = defineStore('pharmacy-list', {
         this.loading = false;
       }
     },
+    async PharmacyGroup(id){
+      this.loading = true;
+      this.error = null;
+
+      const loadingTimer = new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      });
+
+      try{
+        const response = await axiosData.get(`/Pharmacy/get-group/${id}`);
+        this.PharmacyGroupItem = response.data;
+
+        await loadingTimer;
+      } catch(error) {
+        console.error('Error fetching categories:', error);
+        this.error = 'Failed to fetch categories';
+
+        await loadingTimer;
+      } finally{
+        this.loading = false;
+      }
+    }
   },
 });

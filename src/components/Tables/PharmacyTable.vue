@@ -15,17 +15,17 @@
     <table>
       <thead>
         <tr>
-          <th>Id</th>
-          <th>User Info</th>
-          <th>Phone</th>
-          <th>Joining Date</th>
-          <th>Role</th>
+          <th>#NO.</th>
+          <th>Pharmacy Name</th>
+          <th>Price</th>
+          <th>Expire Date</th>
+          <th>Discount</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(contact, index) in filteredContacts" :key="index">
-          <td>#{{ contact.id }}</td>
+        <tr v-for="(contact, index) in Pharmacies" :key="contact.id">
+          <td>{{ index+1 }}</td>
           <td>
             <div class="user-info">
               <div>
@@ -33,19 +33,19 @@
               </div>
             </div>
           </td>
-          <td>{{ contact.phone }}</td>
-          <td>{{ contact.joiningDate }}</td>
+          <td>{{ contact.price }}</td>
+          <td>{{ contact.expiryDate }}</td>
           <td>
             <span :class="['role', contact.roleClass]">
-              {{ contact.role }}
+              {{ contact.discount }}
             </span>
           </td>
-          <td>
+          <td class="action-buttons">
             <button @click="editContact(contact.id)" class="edit-button">
-              <i class="fas fa-pen"></i>
+              <font-awesome-icon :icon="['fas', 'pen-to-square']" />
             </button>
             <button @click="deleteContact(contact.id)" class="delete-button">
-              <i class="fas fa-trash"></i>
+              <font-awesome-icon :icon="['fas', 'trash']" />
             </button>
           </td>
         </tr>
@@ -56,6 +56,12 @@
   
   <script>
 export default {
+  props:{
+    Pharmacies:{
+      type:Array,
+      default:() => []
+    }
+  },
   data() {
     return {
       searchQuery: "",
@@ -152,6 +158,12 @@ td {
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
+.action-buttons{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 65px;
+}
 tr{
     height: 65px;
 }
@@ -180,10 +192,10 @@ tr{
   border: none;
   cursor: pointer;
 }
-.edit-button i {
+.edit-button svg {
   color: #4e8ff7;
 }
-.delete-button i {
+.delete-button svg {
   color: #e57373;
 }
 </style>

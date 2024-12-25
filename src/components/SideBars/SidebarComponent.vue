@@ -76,7 +76,7 @@
             <p class="user-role">Developer</p>
           </div>
         </div>
-        <i class="logout-icon"
+        <i class="logout-icon" @click="Logout"
           ><font-awesome-icon :icon="['fas', 'power-off']"
         /></i>
       </div>
@@ -146,6 +146,10 @@ export default {
     setActiveSubmenu(submenuLabel) {
       this.activeSubmenu = submenuLabel;
     },
+    Logout(){
+      localStorage.removeItem("Administration")
+      this.$router.push({name: 'login'})
+    }
   },
 };
 </script>

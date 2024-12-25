@@ -3,9 +3,16 @@
     :title="$t('pharmacy-group')"
     path="Pharmacy • Pharmacy List • Pharmacy Group"
   />
-  <div class="group-container">
+  <div v-if="loading" class="loading-container">
+    <img
+      src="@/assets/Images/Logo-36-300.png"
+      alt="Loading"
+      class="loading-logo"
+    />
+  </div>
+  <div class="group-container" v-else>
     <div class="image_section">
-      <img src="@/assets/Images/assets-35.png" alt="" />
+      <img src="@/assets/Images/assets-35.png" alt="User Image" />
     </div>
     <div class="owner_section">
       <h2>Owner Data</h2>
@@ -41,17 +48,42 @@
     </div>
   </div>
   <div class="pharmacies_section">
-    <PharmacyTable />
+    <PharmacyTable :Pharmacies="pharmacyGroup.pharmacies" />
   </div>
 </template>
 
 <script>
+import { usePharmacyListStore } from "@/Stores/PharmacyList";
 import PageHeader from "@/components/Cards/PageHeader.vue";
 import PharmacyTable from "@/components/Tables/PharmacyTable.vue";
 export default {
   components: {
     PageHeader,
     PharmacyTable,
+  },
+  data() {
+    return {
+      pharmacyListStore: usePharmacyListStore(),
+    };
+  },
+  created() {
+    const pharmacyId = this.$route.params.id;
+    if (pharmacyId) {
+      this.pharmacyListStore.PharmacyGroup(pharmacyId);
+    } else {
+      console.error("Pharmacy ID not found in route params");
+    }
+  },
+  computed: {
+    pharmacyGroup() {
+      return this.pharmacyListStore.PharmacyGroupItem;
+    },
+    loading() {
+      return this.pharmacyListStore.loading;
+    },
+    error() {
+      return this.pharmacyListStore.error;
+    },
   },
 };
 </script>
@@ -121,7 +153,7 @@ export default {
 }
 
 .pharmacies_section {
-    box-shadow: #919eab4d 0 0 2px, #919eab1f 0 12px 24px -4px !important;
+  box-shadow: #919eab4d 0 0 2px, #919eab1f 0 12px 24px -4px !important;
   padding: 20px;
   border-radius: 10px;
 }

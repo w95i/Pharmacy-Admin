@@ -5,6 +5,7 @@ import { faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import { faTrash} from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { faSliders} from '@fortawesome/free-solid-svg-icons'
 import { faEye} from '@fortawesome/free-solid-svg-icons'
 import { faCartPlus} from '@fortawesome/free-solid-svg-icons'
@@ -36,6 +37,7 @@ library.add(faYoutube)
 library.add(faFacebook)
 library.add(faBars)
 library.add(faTrash)
+library.add(faPenToSquare)
 library.add(faCartShopping)
 library.add(faSliders)
 library.add(faEye)
