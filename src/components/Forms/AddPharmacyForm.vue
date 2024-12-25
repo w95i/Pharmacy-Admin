@@ -55,6 +55,7 @@
 
   <script>
 import axiosData from "@/Axios";
+import { usePharmacyListStore } from "@/Stores/PharmacyList";
 
 export default {
   props: {
@@ -65,22 +66,26 @@ export default {
   },
   data() {
     return {
+      pharmacyStore: usePharmacyListStore(),
       pharmacyData: {
         groupId: this.groupId, // Use prop for initialization
         pharmacyName: "",
         location: {
-          lat: 0,
-          lng: 0,
+          lat: null,
+          lng: null,
           address: "",
         },
-        price: 0,
-        discount: 0,
+        price: null,
+        discount: null,
         expiryDate: "",
       },
     };
   },
   methods: {
     async postPharmacy() {
+      const formattedExpiryDate = this.pharmacyData.expiryDate
+        ? new Date(this.pharmacyData.expiryDate).toISOString()
+        : null;
       try {
         const payload = {
           groupId: this.pharmacyData.groupId,
@@ -92,19 +97,21 @@ export default {
           },
           price: this.pharmacyData.price,
           discount: this.pharmacyData.discount,
-          expiryDate: this.pharmacyData.expiryDate,
+          expiryDate: formattedExpiryDate,
         };
 
-        const response = await axiosData.post("/create-pharmacy", payload);
+        const response = await axiosData.post(
+          "/Pharmacy/create-pharmacy",
+          payload
+        );
 
         console.log("Response:", response.data);
 
-        this.resetForm();
+        this.pharmacyStore.PharmacyGroup(this.pharmacyData.groupId)
 
-        this.$toast.success(this.$t("pharmacy-added-successfully"));
+        this.resetForm();
       } catch (error) {
         console.error(error);
-        this.$toast.error(this.$t("submission-failed"));
       }
     },
     resetForm() {
@@ -112,12 +119,12 @@ export default {
         groupId: this.groupId,
         pharmacyName: "",
         location: {
-          lat: 0,
-          lng: 0,
+          lat: null,
+          lng: null,
           address: "",
         },
-        price: 0,
-        discount: 0,
+        price: null,
+        discount: null,
         expiryDate: "",
       };
     },
