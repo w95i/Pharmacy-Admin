@@ -1,6 +1,22 @@
 <template>
-  <AddPharmacy v-if="ShowAddPharmacy" @close-popup="toggleContact" :groupId="groupId" />
-  <EditPharmacy v-if="ShowEditPharmacy" @close-popup="editContact" :pharmacyId="pharmacyId" />
+  <ConfirmDialog
+    v-if="showConfirmDialog"
+    :title="'Delete Pharmacy'"
+    :message="'Are you sure you want to delete this pharmacy?'"
+    :isVisible="showConfirmDialog"
+    @confirm="confirmDelete"
+    @cancel="cancelDelete"
+  />
+  <AddPharmacy
+    v-if="ShowAddPharmacy"
+    @close-popup="toggleContact"
+    :groupId="groupId"
+  />
+  <EditPharmacy
+    v-if="ShowEditPharmacy"
+    @close-popup="editContact"
+    :pharmacyId="pharmacyId"
+  />
   <div class="editable-table">
     <div class="header">
       <h2>Pharmacies Table</h2>
@@ -46,7 +62,7 @@
             <button @click="editContact(contact.id)" class="edit-button">
               <font-awesome-icon :icon="['fas', 'pen-to-square']" />
             </button>
-            <button @click="deleteContact(contact.id)" class="delete-button">
+            <button @click="showDeleteDialog(contact.id)" class="delete-button">
               <font-awesome-icon :icon="['fas', 'trash']" />
             </button>
           </td>
@@ -57,37 +73,42 @@
 </template>
   
   <script>
+import axiosData from "@/Axios";
 import AddPharmacy from "@/components/PopUp/AddPharmacy.vue";
 import EditPharmacy from "@/components/PopUp/EditPharmcy.vue";
+import { usePharmacyListStore } from "@/Stores/PharmacyList";
+import ConfirmDialog from "../PopUp/ConfirmDialog.vue";
 export default {
   props: {
     Pharmacies: {
       type: Array,
       default: () => [],
     },
-    groupId:{
+    groupId: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
-  components:{
+  components: {
     AddPharmacy,
-    EditPharmacy
+    EditPharmacy,
+    ConfirmDialog
   },
   data() {
     return {
+      PharmacyListStore: usePharmacyListStore(),
       searchQuery: "",
       ShowAddPharmacy: false,
       ShowEditPharmacy: false,
-      pharmacyId:''
+      showConfirmDialog: false,
+      pharmacyId: "",
     };
   },
   computed: {
     filteredContacts() {
-      return this.Pharmacies.filter(
-        (contact) =>
-          contact.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
+      return this.Pharmacies.filter((contact) =>
+        contact.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
     },
   },
   methods: {
@@ -96,20 +117,32 @@ export default {
     },
     editContact(id) {
       this.ShowEditPharmacy = !this.ShowEditPharmacy;
-      this.pharmacyId = id
+      this.pharmacyId = id;
     },
-    deleteContact(id) {
-      const confirmDelete = confirm(
-        `Are you sure you want to delete contact with ID: ${id}?`
-      );
-      if (confirmDelete) {
-        this.contacts = this.contacts.filter((contact) => contact.id !== id);
-      }
-    },
+      showDeleteDialog(id) {
+        this.pharmacyId = id;
+        this.showConfirmDialog = true;
+      },
+      confirmDelete() {
+        this.showConfirmDialog = false;
+        const id = this.pharmacyId;
+        this.pharmacyId = null;
+        axiosData.delete(`/Pharmacy/delete-pharmacy/${id}`).then((response) => {
+          if (response.status === 200) {
+            this.PharmacyListStore.PharmacyGroup(this.groupId);
+          } else {
+            alert("Failed to delete pharmacy!");
+          }
+        });
+      },
+      cancelDelete() {
+        this.showConfirmDialog = false;
+        this.pharmacyId = null;
+      },
   },
 };
 </script>
-  
+
   <style scoped>
 .editable-table {
   max-width: 100%;

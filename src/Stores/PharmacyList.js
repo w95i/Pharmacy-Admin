@@ -60,7 +60,7 @@ export const usePharmacyListStore = defineStore('pharmacy-list', {
       try{
         const response = await axiosData.get(`/Pharmacy/get-pharmacy/${id}`);
         this.PharmacyItem = response.data;
-
+        console.log(this.PharmacyItem);
       } catch(error) {
         console.error('Error fetching categories:', error);
         this.error = 'Failed to fetch categories';
