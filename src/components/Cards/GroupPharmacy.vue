@@ -248,7 +248,7 @@ export default {
 }
 
 .loading-logo {
-  width: 250px;
+  width: 100px;
   animation: rotateLogo 2s linear infinite;
 }
 

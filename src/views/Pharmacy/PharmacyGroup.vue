@@ -180,8 +180,8 @@ export default {
 }
 
 .loading-logo {
-  width: 100px; /* Adjust size as needed */
-  animation: rotateLogo 2s linear infinite; /* Infinite rotation */
+  width: 150px;
+  animation: rotateLogo 2s linear infinite;
 }
 
 @keyframes rotateLogo {

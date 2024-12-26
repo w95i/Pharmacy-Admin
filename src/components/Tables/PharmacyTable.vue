@@ -1,5 +1,6 @@
 <template>
   <AddPharmacy v-if="ShowAddPharmacy" @close-popup="toggleContact" :groupId="groupId" />
+  <EditPharmacy v-if="ShowEditPharmacy" @close-popup="editContact" :pharmacyId="pharmacyId" />
   <div class="editable-table">
     <div class="header">
       <h2>Pharmacies Table</h2>
@@ -25,7 +26,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(contact, index) in Pharmacies" :key="contact.id">
+        <tr v-for="(contact, index) in filteredContacts" :key="contact.id">
           <td>{{ index + 1 }}</td>
           <td>
             <div class="user-info">
@@ -57,6 +58,7 @@
   
   <script>
 import AddPharmacy from "@/components/PopUp/AddPharmacy.vue";
+import EditPharmacy from "@/components/PopUp/EditPharmcy.vue";
 export default {
   props: {
     Pharmacies: {
@@ -69,44 +71,23 @@ export default {
     }
   },
   components:{
-    AddPharmacy
+    AddPharmacy,
+    EditPharmacy
   },
   data() {
     return {
       searchQuery: "",
-      contacts: [
-        {
-          id: 123,
-          avatar: "https://via.placeholder.com/40",
-          name: "Hanna Gover",
-          email: "hgover@gmail.com",
-          phone: "+123 456 789",
-          joiningDate: "12-10-2014",
-          role: "Designer",
-          roleClass: "designer",
-        },
-        {
-          id: 123,
-          avatar: "https://via.placeholder.com/40",
-          name: "waeel Gover",
-          email: "hgover@gmail.com",
-          phone: "+123 456 789",
-          joiningDate: "12-10-2014",
-          role: "Designer",
-          roleClass: "designer",
-        },
-      ],
       ShowAddPharmacy: false,
       ShowEditPharmacy: false,
+      pharmacyId:''
     };
   },
   computed: {
     filteredContacts() {
-      return this.contacts.filter(
+      return this.Pharmacies.filter(
         (contact) =>
-          contact.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          contact.email.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
+          contact.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
     },
   },
   methods: {
@@ -114,7 +95,8 @@ export default {
       this.ShowAddPharmacy = !this.ShowAddPharmacy;
     },
     editContact(id) {
-      alert(`Edit contact with ID: ${id}`);
+      this.ShowEditPharmacy = !this.ShowEditPharmacy;
+      this.pharmacyId = id
     },
     deleteContact(id) {
       const confirmDelete = confirm(

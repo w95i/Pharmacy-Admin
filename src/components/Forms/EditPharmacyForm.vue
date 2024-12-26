@@ -1,5 +1,5 @@
 <template>
-  <h2 style="text-align: center; margin: 10px;">Add Pharmacy</h2>
+  <h2 style="text-align: center; margin: 10px">Edit Pharmacy</h2>
   <form @submit.prevent="postPharmacy">
     <div class="form-group">
       <f-input
@@ -8,20 +8,17 @@
       />
       <fieldset class="location-section">
         <legend>{{ $t("location") }}</legend>
-        <f-input
-          :label="$t('address')"
-          v-model="pharmacyData.location.address"
-        />
+        <f-input :label="$t('address')" v-model="pharmacyData.address" />
         <div class="form-row">
           <f-input
             :label="$t('latitude')"
-            v-model="pharmacyData.location.lat"
+            v-model="pharmacyData.lat"
             type="number"
             step="any"
           />
           <f-input
             :label="$t('longitude')"
-            v-model="pharmacyData.location.lng"
+            v-model="pharmacyData.lng"
             type="number"
             step="any"
           />
@@ -53,14 +50,13 @@
   </form>
 </template>
   
-
-  <script>
+<script>
 import axiosData from "@/Axios";
 import { usePharmacyListStore } from "@/Stores/PharmacyList";
 
 export default {
   props: {
-    groupId: {
+    pharmacyId: {
       type: String,
       required: true,
     },
@@ -69,61 +65,82 @@ export default {
     return {
       pharmacyStore: usePharmacyListStore(),
       pharmacyData: {
-        groupId: this.groupId, // Use prop for initialization
         pharmacyName: "",
-        location: {
-          lat: null,
-          lng: null,
-          address: "",
-        },
+        lat: null,
+        lng: null,
+        address: "",
         price: null,
         discount: null,
         expiryDate: "",
       },
     };
   },
+  created() {
+    this.loadPharmacyData();
+    this.pharmacyStore.PharmacyItem;
+  },
+  watch: {
+    "pharmacyStore.PharmacyItem": {
+      handler(newItem) {
+        if (newItem) {
+          this.pharmacyData = {
+            pharmacyName: newItem.name || "",
+            lat: newItem.lat || null,
+            lng: newItem.lng || null,
+            address: newItem.adress || "",
+            price: newItem.price || null,
+            discount: newItem.discount || null,
+            expiryDate: newItem.expiryDate || "",
+          };
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
-    async postPharmacy() {
-      const formattedExpiryDate = this.pharmacyData.expiryDate
-        ? new Date(this.pharmacyData.expiryDate).toISOString()
-        : null;
+    async loadPharmacyData() {
       try {
+        await this.pharmacyStore.PharmacyData(this.pharmacyId);
+      } catch (error) {
+        console.error("Failed to load pharmacy data:", error);
+      }
+    },
+    async postPharmacy() {
+      try {
+        const formattedExpiryDate = this.pharmacyData.expiryDate
+          ? new Date(this.pharmacyData.expiryDate).toISOString()
+          : null;
+
         const payload = {
-          groupId: this.pharmacyData.groupId,
           name: this.pharmacyData.pharmacyName,
-          location: {
-            lat: this.pharmacyData.location.lat,
-            lng: this.pharmacyData.location.lng,
-            address: this.pharmacyData.location.address,
-          },
+          lat: this.pharmacyData.lat,
+          lng: this.pharmacyData.lng,
+          address: this.pharmacyData.address,
           price: this.pharmacyData.price,
           discount: this.pharmacyData.discount,
           expiryDate: formattedExpiryDate,
         };
 
-        const response = await axiosData.post(
-          "/Pharmacy/create-pharmacy",
+        const response = await axiosData.put(
+          "/Pharmacy/update-pharmacy",
           payload
         );
 
-        console.log("Response:", response.data);
+        console.log("Pharmacy updated successfully:", response.data);
 
-        this.pharmacyStore.PharmacyGroup(this.pharmacyData.groupId)
+        await this.pharmacyStore.PharmacyGroup(this.pharmacyId);
 
         this.resetForm();
       } catch (error) {
-        console.error(error);
+        console.error("Failed to update pharmacy:", error);
       }
     },
     resetForm() {
       this.pharmacyData = {
-        groupId: this.groupId,
         pharmacyName: "",
-        location: {
-          lat: null,
-          lng: null,
-          address: "",
-        },
+        lat: null,
+        lng: null,
+        address: "",
         price: null,
         discount: null,
         expiryDate: "",
@@ -132,9 +149,9 @@ export default {
   },
 };
 </script>
+    
   
-
-<style scoped>
+  <style scoped>
 .location-section {
   margin: 10px;
   border: 1px solid #ccc;

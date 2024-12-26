@@ -5,6 +5,7 @@ export const usePharmacyListStore = defineStore('pharmacy-list', {
   state: () => ({
     PharmacyList: [],
     PharmacyGroupItem:{},
+    PharmacyItem:{},
     loading: false,
     error: null,
   }),
@@ -51,6 +52,19 @@ export const usePharmacyListStore = defineStore('pharmacy-list', {
         this.error = 'Failed to fetch categories';
 
         await loadingTimer;
+      } finally{
+        this.loading = false;
+      }
+    },
+    async PharmacyData(id){
+      try{
+        const response = await axiosData.get(`/Pharmacy/get-pharmacy/${id}`);
+        this.PharmacyItem = response.data;
+
+      } catch(error) {
+        console.error('Error fetching categories:', error);
+        this.error = 'Failed to fetch categories';
+
       } finally{
         this.loading = false;
       }
