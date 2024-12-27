@@ -1,6 +1,6 @@
 <template>
   <h2 style="text-align: center; margin: 10px">Edit Pharmacy</h2>
-  <form @submit.prevent="postPharmacy">
+  <form @submit.prevent="UpdatePharmacy">
     <div class="form-group">
       <f-input
         :label="$t('pharmacy-name')"
@@ -45,7 +45,7 @@
       />
     </div>
     <button type="submit" class="btn-submit">
-      {{ $t("submit") }}
+      {{ $t("update") }}
     </button>
   </form>
 </template>
@@ -66,9 +66,11 @@ export default {
       pharmacyStore: usePharmacyListStore(),
       pharmacyData: {
         pharmacyName: "",
-        lat: null,
-        lng: null,
-        address: "",
+        location: {
+          lat: null,
+          lng: null,
+          address: "",
+        },
         price: null,
         discount: null,
         expiryDate: "",
@@ -85,9 +87,11 @@ export default {
         if (newItem) {
           this.pharmacyData = {
             pharmacyName: newItem.name || "",
-            lat: newItem.lat || null,
-            lng: newItem.lng || null,
-            address: newItem.adress || "",
+            location: {
+              lat: newItem.lat || null,
+              lng: newItem.lng || null,
+              address: newItem.adress || "",
+            },
             price: newItem.price || null,
             discount: newItem.discount || null,
             expiryDate: newItem.expiryDate || "",
@@ -131,6 +135,19 @@ export default {
         await this.pharmacyStore.PharmacyGroup(this.pharmacyId);
 
         this.resetForm();
+      } catch (error) {
+        console.error("Failed to update pharmacy:", error);
+      }
+    },
+    async UpdatePharmacy() {
+      try {
+        const response = await axiosData.put(
+          `/Pharmacy/update-pharmacy/${this.pharmacyId}`,
+          this.pharmacyData
+        );
+
+        console.log(response.statusCode);
+        this.pharmacyStore.fetchPharmacy();
       } catch (error) {
         console.error("Failed to update pharmacy:", error);
       }

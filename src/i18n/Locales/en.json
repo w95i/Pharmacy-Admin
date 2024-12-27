@@ -1,9 +1,9 @@
 {
   "home": "Home",
   "posts": "Posts",
-  "pharmacy": "Pharmacies",
-  "create-pharmacy": "New Pharmacy",
-  "pharmacy-list": "Pharmacies List",
+  "pharmacy": "Pharmacies Group",
+  "create-pharmacy": "New Group",
+  "pharmacy-list": "Groups List",
   "pharmacy-group": "Pharmacy Group",
   "nothing": "Nothing",
   "pharmacy-name": "Pharmacy Name",
@@ -14,5 +14,10 @@
   "price" : "Subscription Price",
   "discount" : "Discount",
   "expire-date" : "Subscription Expire Date",
-  "submit" : "Submit"
+  "submit" : "Submit",
+  "delete-pharmacy" : "Delete Pharmacy",
+  "description-delete" : "Are you sure you want to delete this pharmacy?",
+  "yes" : "Yes",
+  "no" : "No",
+  "update" : "Update"
 }

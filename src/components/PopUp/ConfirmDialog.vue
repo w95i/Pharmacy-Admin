@@ -4,8 +4,8 @@
         <h3>{{ title }}</h3>
         <p>{{ message }}</p>
         <div class="modal-actions">
-          <button @click="confirm" class="confirm-button">Yes</button>
-          <button @click="cancel" class="cancel-button">No</button>
+          <button @click="confirm" class="confirm-button">{{$t('yes')}}</button>
+          <button @click="cancel" class="cancel-button">{{ $t('no') }}</button>
         </div>
       </div>
     </div>
@@ -56,8 +56,13 @@
     padding: 20px;
     border-radius: 8px;
     text-align: center;
-    max-width: 400px;
+    max-width: 350px;
     width: 90%;
+    font-family: var(--cairo-font);
+  }
+  .modal-content h3,
+  .modal-content p{
+    margin-bottom: 10px;
   }
   .modal-actions {
     display: flex;
@@ -71,6 +76,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    font-family: var(--cairo-font);
   }
   .cancel-button {
     background-color: #d33;
@@ -79,6 +85,7 @@
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    font-family: var(--cairo-font);
   }
   </style>
   

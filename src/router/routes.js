@@ -12,11 +12,6 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
-    component: () => import("../views/AboutView.vue"),
-  },
-  {
     path: "/pharmacy",
     name: "pharmacy",
     redirect: "/pharmacy/pharmacy-list",
@@ -36,7 +31,7 @@ const routes = [
       {
         path: "create-group",
         name: "create-pharmacy",
-        component: () => import("/"),
+        component: () => import("@/views/Pharmacy/AddPharmacy.vue"),
       },
     ],
   },

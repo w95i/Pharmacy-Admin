@@ -22,7 +22,17 @@
           >
             <div class="menu-item-title">
               <font-awesome-icon :icon="menu.icon" />
-              <span v-if="!isCollapsed"> {{ $t(menu.label) }} </span>
+              <span
+                v-if="!isCollapsed"
+                :style="{
+                  fontFamily:
+                    languageStore.selectedLanguage === 'en'
+                      ? 'var(--jakarta-font)'
+                      : 'var(--cairo-font)',
+                }"
+              >
+                {{ $t(menu.label) }}
+              </span>
             </div>
             <span v-if="menu.submenus && !isCollapsed" class="arrow">
               <font-awesome-icon
@@ -54,7 +64,16 @@
             :class="{ active: activeSubmenu === submenu.label }"
             @click.stop="setActiveSubmenu(submenu.label)"
           >
-            <router-link :to="submenu.path || '#'" class="submenu-link">
+            <router-link
+              :to="submenu.path || '#'"
+              class="submenu-link"
+              :style="{
+                fontFamily:
+                  languageStore.selectedLanguage === 'en'
+                    ? 'var(--jakarta-font)'
+                    : 'var(--cairo-font)',
+              }"
+            >
               {{ $t(submenu.label) }}
             </router-link>
           </div>
@@ -85,6 +104,7 @@
 </template>
   
   <script>
+  import { useLanguageStore } from "@/Stores/LanguageStore";
 import { useI18n } from "vue-i18n";
 export default {
   setup() {
@@ -101,6 +121,7 @@ export default {
   },
   data() {
     return {
+      languageStore: useLanguageStore(),
       activeMenu: null,
       activeSubmenu: null,
       menus: [
@@ -138,7 +159,7 @@ export default {
   methods: {
     toggleMenu(menuLabel) {
       this.activeMenu = this.activeMenu === menuLabel ? null : menuLabel;
-      this.activeSubmenu = null; // Reset submenu selection
+      this.activeSubmenu = null;
     },
     isExpanded(menuLabel) {
       return this.activeMenu === menuLabel;
@@ -146,10 +167,10 @@ export default {
     setActiveSubmenu(submenuLabel) {
       this.activeSubmenu = submenuLabel;
     },
-    Logout(){
-      localStorage.removeItem("Administration")
-      this.$router.push({name: 'login'})
-    }
+    Logout() {
+      localStorage.removeItem("Administration");
+      this.$router.push({ name: "login" });
+    },
   },
 };
 </script>
@@ -201,7 +222,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 12px;
+  padding: 8px 12px;
   color: #555;
   cursor: pointer;
   border-radius: 5px;
@@ -212,7 +233,7 @@ export default {
 .menu-item-title {
   display: flex;
   justify-content: start;
-  align-items: stretch;
+  align-items: center;
   gap: 10px;
 }
 
@@ -264,7 +285,7 @@ export default {
   display: block;
   width: 100%;
   height: 100%;
-  padding: 8px 10px;
+  padding: 6px 10px;
   margin-bottom: 2px;
 }
 

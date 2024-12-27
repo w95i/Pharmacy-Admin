@@ -1,8 +1,8 @@
 <template>
   <ConfirmDialog
     v-if="showConfirmDialog"
-    :title="'Delete Pharmacy'"
-    :message="'Are you sure you want to delete this pharmacy?'"
+    :title="$t('delete-pharmacy')"
+    :message="$t('description-delete')"
     :isVisible="showConfirmDialog"
     @confirm="confirmDelete"
     @cancel="cancelDelete"
@@ -196,10 +196,6 @@ tr {
 }
 tr:hover {
   background-color: #f8f8f8;
-}
-.user-info {
-  display: flex;
-  align-items: center;
 }
 .user-info img {
   border-radius: 50%;

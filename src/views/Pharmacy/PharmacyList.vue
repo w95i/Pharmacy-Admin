@@ -1,6 +1,6 @@
 <template>
   <div class="page_container" v-if="!isGroupView">
-    <PageHeader title="Pharmacy List" path="DashBoard • Pharmacy • Pharmacy List"/>
+    <PageHeader :title="$t('pharmacy-list')" path="DashBoard • Pharmacy • Pharmacy Groups"/>
     <div class="groups_wrapper">
         <GroupPharmacy :pharmacyList="pharmacyList" :loading="loading" :error="error"/>
     </div>
