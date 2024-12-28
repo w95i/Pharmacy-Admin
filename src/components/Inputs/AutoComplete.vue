@@ -1,7 +1,7 @@
 <template>
   <div class="autocomplete_group">
     <slot name="label">
-      <label for="comboBox">{{ label }}</label>
+      <label for="comboBox">{{ label }} <span class="note_section" v-if="note">{{ note }}</span></label>
     </slot>
     <div class="input-wrapper">
       <input
@@ -36,6 +36,7 @@
 export default {
   props: {
     label: String,
+    note: String,
     value: [String, Number],
   },
   data() {
@@ -178,6 +179,13 @@ export default {
 }
 .autocomplete-item:hover {
   background-color: #f1f1f1;
+}
+
+.note_section{
+  margin: 0 5px;
+  font-size: 11px;
+  color: red;
+  font-weight: 600;
 }
 </style>
   

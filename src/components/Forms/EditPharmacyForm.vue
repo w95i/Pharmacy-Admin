@@ -8,17 +8,23 @@
       />
       <fieldset class="location-section">
         <legend>{{ $t("location") }}</legend>
-        <f-input :label="$t('address')" v-model="pharmacyData.address" />
+        <f-input :label="$t('address')" v-model="pharmacyData.location.address" />
+        <MapPicker
+          @location-selected="onLocationSelected"
+          :initial-zoom="12"
+          class="map-picker"
+          :marker-position="{ lat: pharmacyData.location.lat, lng: pharmacyData.location.lng }"
+        />
         <div class="form-row">
           <f-input
             :label="$t('latitude')"
-            v-model="pharmacyData.lat"
+            v-model="pharmacyData.location.lat"
             type="number"
             step="any"
           />
           <f-input
             :label="$t('longitude')"
-            v-model="pharmacyData.lng"
+            v-model="pharmacyData.location.lng"
             type="number"
             step="any"
           />
@@ -49,10 +55,11 @@
     </button>
   </form>
 </template>
-  
+
 <script>
 import axiosData from "@/Axios";
 import { usePharmacyListStore } from "@/Stores/PharmacyList";
+import MapPicker from "@/components/Maps/MapPicker.vue";
 
 export default {
   props: {
@@ -60,6 +67,13 @@ export default {
       type: String,
       required: true,
     },
+    groupId:{
+      type:String,
+      required:true
+    }
+  },
+  components: {
+    MapPicker,
   },
   data() {
     return {
@@ -79,7 +93,6 @@ export default {
   },
   created() {
     this.loadPharmacyData();
-    this.pharmacyStore.PharmacyItem;
   },
   watch: {
     "pharmacyStore.PharmacyItem": {
@@ -90,7 +103,7 @@ export default {
             location: {
               lat: newItem.lat || null,
               lng: newItem.lng || null,
-              address: newItem.adress || "",
+              address: newItem.address || "",
             },
             price: newItem.price || null,
             discount: newItem.discount || null,
@@ -106,10 +119,10 @@ export default {
       try {
         await this.pharmacyStore.PharmacyData(this.pharmacyId);
       } catch (error) {
-        console.error("Failed to load pharmacy data:", error);
+        console.error("Failed to load pharmacy data:", error.message);
       }
     },
-    async postPharmacy() {
+    async UpdatePharmacy() {
       try {
         const formattedExpiryDate = this.pharmacyData.expiryDate
           ? new Date(this.pharmacyData.expiryDate).toISOString()
@@ -117,47 +130,35 @@ export default {
 
         const payload = {
           name: this.pharmacyData.pharmacyName,
-          lat: this.pharmacyData.lat,
-          lng: this.pharmacyData.lng,
-          address: this.pharmacyData.address,
+          location: this.pharmacyData.location,
           price: this.pharmacyData.price,
           discount: this.pharmacyData.discount,
           expiryDate: formattedExpiryDate,
         };
 
         const response = await axiosData.put(
-          "/Pharmacy/update-pharmacy",
+          `/Pharmacy/update-pharmacy/${this.pharmacyId}`,
           payload
         );
 
         console.log("Pharmacy updated successfully:", response.data);
 
-        await this.pharmacyStore.PharmacyGroup(this.pharmacyId);
+        await this.pharmacyStore.PharmacyGroup(this.groupId);
 
         this.resetForm();
-      } catch (error) {
-        console.error("Failed to update pharmacy:", error);
-      }
-    },
-    async UpdatePharmacy() {
-      try {
-        const response = await axiosData.put(
-          `/Pharmacy/update-pharmacy/${this.pharmacyId}`,
-          this.pharmacyData
-        );
-
-        console.log(response.statusCode);
         this.pharmacyStore.fetchPharmacy();
       } catch (error) {
-        console.error("Failed to update pharmacy:", error);
+        console.error("Failed to update pharmacy:", error.message);
       }
     },
     resetForm() {
       this.pharmacyData = {
         pharmacyName: "",
-        lat: null,
-        lng: null,
-        address: "",
+        location: {
+          lat: null,
+          lng: null,
+          address: "",
+        },
         price: null,
         discount: null,
         expiryDate: "",
@@ -166,9 +167,8 @@ export default {
   },
 };
 </script>
-    
-  
-  <style scoped>
+
+<style scoped>
 .location-section {
   margin: 10px;
   border: 1px solid #ccc;

@@ -1,5 +1,5 @@
 <template>
-  <h2 style="text-align: center; margin: 10px;">Add Pharmacy</h2>
+  <h2 style="text-align: center; margin: 10px">Add Pharmacy</h2>
   <form @submit.prevent="postPharmacy">
     <div class="form-group">
       <f-input
@@ -11,6 +11,13 @@
         <f-input
           :label="$t('address')"
           v-model="pharmacyData.location.address"
+        />
+        <!-- MapPicker Component -->
+        <MapPicker
+          @location-selected="onLocationSelected"
+          :initial-center="{ lat: 33.3152, lng: 44.3661 }"
+          :initial-zoom="12"
+          class="map-picker"
         />
         <div class="form-row">
           <f-input
@@ -52,11 +59,13 @@
     </button>
   </form>
 </template>
+
   
 
   <script>
 import axiosData from "@/Axios";
 import { usePharmacyListStore } from "@/Stores/PharmacyList";
+import MapPicker from "@/components/Maps/MapPicker.vue";
 
 export default {
   props: {
@@ -64,6 +73,9 @@ export default {
       type: String,
       required: true,
     },
+  },
+  components: {
+    MapPicker,
   },
   data() {
     return {
@@ -108,7 +120,7 @@ export default {
 
         console.log("Response:", response.data);
 
-        this.pharmacyStore.PharmacyGroup(this.pharmacyData.groupId)
+        this.pharmacyStore.PharmacyGroup(this.pharmacyData.groupId);
 
         this.resetForm();
       } catch (error) {
@@ -128,6 +140,10 @@ export default {
         discount: null,
         expiryDate: "",
       };
+    },
+    onLocationSelected(location) {
+      this.pharmacyData.location.lat = location.lat;
+      this.pharmacyData.location.lng = location.lng;
     },
   },
 };

@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fawmi/vue-google-maps": "^0.9.79",
     "@fortawesome/duotone-light-svg-icons": "^6.7.1",
     "@fortawesome/duotone-regular-svg-icons": "^6.7.1",
     "@fortawesome/duotone-thin-svg-icons": "^6.7.1",
@@ -18,10 +19,12 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "axios": "^1.7.9",
     "core-js": "^3.8.3",
+    "dotenv": "^16.4.7",
     "pinia": "^2.3.0",
     "vue": "^3.2.13",
     "vue-i18n": "^10.0.5",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.3",
+    "vue3-google-map": "^0.21.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

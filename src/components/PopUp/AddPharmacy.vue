@@ -40,13 +40,14 @@ export default {
   justify-content: center;
   z-index: 1000;
   font-family: var(--jakarta-font);
+  overflow-y: auto;
 }
 
 .popup-container .popup-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -45%);
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -68,7 +69,7 @@ export default {
 
 .popup-contact {
   width: 100%;
-  padding: 20px 10px;
+  padding: 20px 10px 0;
 }
 
 .close-icon {

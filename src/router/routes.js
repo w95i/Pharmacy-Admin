@@ -35,6 +35,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/map",
+    name: "Map",
+    component: () => import('@/views/mapView.vue'),
+  },
 ];
 
 export default routes;

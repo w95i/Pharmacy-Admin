@@ -16,6 +16,7 @@
     v-if="ShowEditPharmacy"
     @close-popup="editContact"
     :pharmacyId="pharmacyId"
+    :groupId="groupId"
   />
   <div class="editable-table">
     <div class="header">

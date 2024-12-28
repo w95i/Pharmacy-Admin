@@ -9,7 +9,7 @@
         />
       </div>
       <div class="popup-contact">
-        <EditPharmacyForm :pharmacyId="pharmacyId" />
+        <EditPharmacyForm :pharmacyId="pharmacyId" :groupId="groupId" />
       </div>
     </div>
   </div>
@@ -24,6 +24,10 @@ export default {
       type: String,
       default: null,
     },
+    groupId:{
+      type:String,
+      required: true,
+    }
   },
   components: {
     EditPharmacyForm
@@ -44,13 +48,14 @@ export default {
   justify-content: center;
   z-index: 1000;
   font-family: var(--jakarta-font);
+  overflow-y: auto;
 }
 
 .popup-container .popup-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -45%);
   background-color: white;
   padding: 20px;
   border-radius: 10px;

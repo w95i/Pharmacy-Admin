@@ -1,8 +1,15 @@
 <template>
   <div class="page_container" v-if="!isGroupView">
-    <PageHeader :title="$t('pharmacy-list')" path="DashBoard • Pharmacy • Pharmacy Groups"/>
+    <PageHeader
+      :title="$t('pharmacy-list')"
+      path="DashBoard • Pharmacy • Pharmacy Groups"
+    />
     <div class="groups_wrapper">
-        <GroupPharmacy :pharmacyList="pharmacyList" :loading="loading" :error="error"/>
+      <GroupPharmacy
+        :pharmacyList="pharmacyList"
+        :loading="loading"
+        :error="error"
+      />
     </div>
   </div>
   <div class="page_container" v-else>
@@ -11,9 +18,9 @@
 </template>
 
 <script>
-import { usePharmacyListStore } from '@/Stores/PharmacyList';
-import GroupPharmacy from '@/components/Cards/GroupPharmacy.vue';
-import PageHeader from '@/components/Cards/PageHeader.vue';
+import { usePharmacyListStore } from "@/Stores/PharmacyList";
+import GroupPharmacy from "@/components/Cards/GroupPharmacy.vue";
+import PageHeader from "@/components/Cards/PageHeader.vue";
 
 export default {
   components: {
@@ -39,7 +46,7 @@ export default {
       return this.pharmacyListStore.error;
     },
     isGroupView() {
-      return this.$route.name === 'pharmacy-group';
+      return this.$route.name === "pharmacy-group";
     },
   },
 };
@@ -48,7 +55,7 @@ export default {
 
 
 <style scoped>
-    .groups_wrapper{
-        padding: 45px 15px;
-    }
+.groups_wrapper {
+  padding: 45px 15px;
+}
 </style>
