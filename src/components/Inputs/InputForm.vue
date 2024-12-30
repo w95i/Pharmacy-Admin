@@ -39,6 +39,7 @@ export default {
   flex-direction: column;
   gap: 7px;
   padding: 5px 10px;
+  width: 100%;
 }
 
 .input_group input {

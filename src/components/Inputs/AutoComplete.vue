@@ -38,19 +38,12 @@ export default {
     label: String,
     note: String,
     value: [String, Number],
+    options: Array,
   },
   data() {
     return {
       searchQuery: this.value || "",
-      options: [
-        "The Dark Knight",
-        "Control with Control",
-        "Combo with Solo",
-        "The Dark",
-        "Fight Club",
-        "demo@company.com",
-        "Pulp Fiction",
-      ],
+      option: this.options || ["-- No List --"],
       filteredOptions: [],
       isFocused: false,
     };
@@ -59,9 +52,9 @@ export default {
     onInput() {
       this.updateValue(this.searchQuery);
       if (this.searchQuery.trim() === "") {
-        this.filteredOptions = this.options;
+        this.filteredOptions = this.option;
       } else {
-        this.filteredOptions = this.options.filter((option) =>
+        this.filteredOptions = this.option.filter((option) =>
           option.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       }
@@ -75,7 +68,7 @@ export default {
     onFocus() {
       this.isFocused = true;
       this.filteredOptions =
-        this.searchQuery.trim() === "" ? this.options : this.filteredOptions;
+        this.searchQuery.trim() === "" ? this.option : this.filteredOptions;
     },
     onBlur() {
       setTimeout(() => {
@@ -106,6 +99,7 @@ export default {
   flex-direction: column;
   gap: 7px;
   padding: 5px 10px;
+  width: 100%;
 }
 .input-wrapper {
   position: relative;

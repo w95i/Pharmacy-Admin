@@ -2,7 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import { faTrash} from '@fortawesome/free-solid-svg-icons'
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
@@ -23,6 +23,8 @@ import { faClock } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
+import { faUserCheck } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
@@ -43,6 +45,7 @@ library.add(faPenToSquare)
 library.add(faCartShopping)
 library.add(faSliders)
 library.add(faEye)
+library.add(faEyeSlash)
 library.add(faCartPlus)
 library.add(faPlus)
 library.add(faStar)
@@ -58,6 +61,8 @@ library.add(faClock)
 library.add(faCircle)
 library.add(faCircleUser)
 library.add(faUser)
+library.add(faUserPlus)
+library.add(faUserCheck)
 library.add(faHouse)
 library.add(faChevronDown)
 library.add(faChevronUp)

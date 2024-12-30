@@ -19,5 +19,8 @@
   "description-delete" : "Are you sure you want to delete this pharmacy?",
   "yes" : "Yes",
   "no" : "No",
-  "update" : "Update"
+  "update" : "Update",
+  "new-user" : "New User",
+  "choice-user" : "Choice User"
+
 }

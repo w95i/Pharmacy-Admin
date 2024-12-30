@@ -81,7 +81,7 @@ export default {
     return {
       pharmacyStore: usePharmacyListStore(),
       pharmacyData: {
-        groupId: this.groupId, // Use prop for initialization
+        groupId: this.groupId,
         pharmacyName: "",
         location: {
           lat: null,
