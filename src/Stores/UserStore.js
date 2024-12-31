@@ -5,13 +5,13 @@ import { defineStore } from "pinia";
 export const useUserStore = defineStore("userData", {
   state: () => ({
     userData: {},
+    allUsers:[],
     success:false,
     loading: false,
     error: null,
   }),
   actions: {
     async fetchLogin(email, password) {
-
       try {
         this.loading = true;
         this.error = null;
@@ -38,5 +38,13 @@ export const useUserStore = defineStore("userData", {
         this.loading = false;
       }
     },
+    async GetAllUsers(){
+      try{
+        const response = await axiosData.get('/Users/get-all-users')
+        this.allUsers = response.data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
 });

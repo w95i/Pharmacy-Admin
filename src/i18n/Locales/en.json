@@ -21,6 +21,7 @@
   "no" : "No",
   "update" : "Update",
   "new-user" : "New User",
-  "choice-user" : "Choice User"
+  "choice-user" : "Choice User",
+  "new-pharmacy" : "Add Pharmacy"
 
 }

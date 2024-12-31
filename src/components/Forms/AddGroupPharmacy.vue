@@ -7,7 +7,11 @@
       <div>
         <h2>Owner Data</h2>
         <div v-if="!newUser" class="choice-user-section">
-          <f-autoComplete label="Full Name" note="(if the user is existing)" />
+          <f-autoComplete
+            label="Full Name"
+            note="(if the user is existing)"
+            v-model="groupData.name"
+          />
           <div class="icon-wrapper" @click="toggleNewUser">
             <p>
               {{ $t("new-user") }}
@@ -19,24 +23,24 @@
           </div>
         </div>
         <div v-else class="new-user-section">
-          <f-input label="Full Name" v-model="ownerData.fullName" />
+          <f-input label="Full Name" v-model="groupData.ownerData.fullName" />
           <div class="input-row">
             <f-input
               label="Email Address"
               type="email"
-              v-model="ownerData.email"
+              v-model="groupData.ownerData.email"
             />
             <f-input
               label="Phone Number"
               type="tel"
-              v-model="ownerData.phone"
+              v-model="groupData.ownerData.phone"
             />
           </div>
           <div class="password-wrapper">
             <label class="control-label"> Password </label>
             <input
               :type="showPasswords ? 'text' : 'password'"
-              v-model="ownerData.password"
+              v-model="groupData.ownerData.password"
             />
             <font-awesome-icon
               :icon="showPasswords ? ['fas', 'eye-slash'] : ['fas', 'eye']"
@@ -45,10 +49,7 @@
           </div>
           <div class="password-wrapper">
             <label class="control-label"> Confirm Password </label>
-            <input
-              :type="showConfirmPasswords ? 'text' : 'password'"
-              v-model="ownerData.confirmPassword"
-            />
+            <input :type="showConfirmPasswords ? 'text' : 'password'" />
             <font-awesome-icon
               :icon="
                 showConfirmPasswords ? ['fas', 'eye-slash'] : ['fas', 'eye']
@@ -115,6 +116,11 @@
           />
         </div>
       </div>
+      <div>
+        <button type="button" class="btn-submit" @click="pushPharmacy">
+          {{ $t("new-pharmacy") }}
+        </button>
+      </div>
       <div class="editable-table">
         <div class="header">
           <h2>Pharmacies Table</h2>
@@ -131,28 +137,28 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(contact, index) in Pharmacies" :key="index">
+            <tr v-for="(contact, index) in groupData.pharmacies" :key="index">
               <td>{{ index + 1 }}</td>
               <td>
                 <div class="user-info">
                   <div>
-                    <p>{{ contact.name }}</p>
+                    <p>{{ contact.pharmacyName }}</p>
                   </div>
                 </div>
               </td>
               <td>{{ contact.price }}</td>
               <td>{{ contact.expiryDate }}</td>
               <td>
-                <span :class="['role', contact.roleClass]">
+                <span>
                   {{ contact.discount }}
                 </span>
               </td>
               <td class="action-buttons">
-                <button @click="editContact(contact.id)" class="edit-button">
+                <button @click="editPharmacy(index)" class="edit-button">
                   <font-awesome-icon :icon="['fas', 'pen-to-square']" />
                 </button>
                 <button
-                  @click="showDeleteDialog(contact.id)"
+                  @click="DeletePharmacy(index)"
                   class="delete-button"
                 >
                   <font-awesome-icon :icon="['fas', 'trash']" />
@@ -172,27 +178,29 @@
 
 <script>
 import MapPicker from "@/components/Maps/MapPicker.vue";
+import { useUserStore } from "@/Stores/UserStore";
 export default {
   components: {
     MapPicker,
   },
   data() {
     return {
+      UserStore: useUserStore(),
+      users:[],
       newUser: false,
       showPasswords: false,
       showConfirmPasswords: false,
-      groupData:{
-        name:'',
+      groupData: {
+        name: "",
         ownerData: {
           email: "",
           password: "",
           fullName: "",
           image: "",
-          phoneNumber: ""
+          phoneNumber: "",
         },
         ownerId: "",
-        pharmacies: []
-
+        pharmacies: [],
       },
       pharmacyData: {
         pharmacyName: "",
@@ -206,6 +214,19 @@ export default {
         expiryDate: "",
       },
     };
+  },
+  created(){
+    this.UserStore.GetAllUsers();
+    this.users = this.UserStore.allUsers;
+  },
+  watch: {
+    "groupData.pharmacies": {
+      handler(newPharmacies) {
+        console.log("Updated Pharmacies:", newPharmacies);
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   methods: {
     onLocationSelected(location) {
@@ -225,8 +246,30 @@ export default {
       console.log("Group Name:", this.groupName);
       console.log("Owner Data:", this.ownerData);
       console.log("Pharmacy Data:", this.pharmacyData);
-      // Add form submission logic here
     },
+    pushPharmacy() {
+      this.groupData.pharmacies = [
+        ...this.groupData.pharmacies,
+        this.pharmacyData,
+      ];
+      this.pharmacyData = {
+        pharmacyName: "",
+        location: {
+          lat: null,
+          lng: null,
+          address: "",
+        },
+        price: null,
+        discount: null,
+        expiryDate: "",
+      };
+    },
+    DeletePharmacy(index) {
+      this.groupData.pharmacies.pull(index);
+    },
+    editPharmacy(index) {
+      this.pharmacyData = this.groupData.pharmacies[index];
+    }
   },
 };
 </script>
@@ -253,12 +296,13 @@ export default {
   cursor: pointer;
   background-color: #4e8ff7;
   color: white;
-  margin-top: 31px;
-  font-size: 18px;
+  margin-top: 36px;
+  font-size: 16px;
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  width: 130px;
+  width: 150px;
+  height: 35px;
   padding: 10px 5px;
 }
 
@@ -326,6 +370,7 @@ export default {
 .pharmacy-section fieldset {
   padding: 25px;
   border-radius: 10px;
+  border: 1px solid #ccc;
 }
 
 .editable-table {
