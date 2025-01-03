@@ -1,8 +1,8 @@
 <template>
   <div class="add_group_container">
-    <form class="add-group-form" @submit.prevent="handleSubmit">
+    <form class="add-group-form" @submit.prevent="postGroup">
       <div>
-        <f-input label="Group Name" v-model="groupName" />
+        <f-input label="Group Name" v-model="groupData.name" />
       </div>
       <div>
         <h2>Owner Data</h2>
@@ -10,7 +10,8 @@
           <f-autoComplete
             label="Full Name"
             note="(if the user is existing)"
-            v-model="groupData.name"
+            :options="users"
+            v-model="selectedUser"
           />
           <div class="icon-wrapper" @click="toggleNewUser">
             <p>
@@ -47,16 +48,6 @@
               @click="toggleShowPasswords"
             />
           </div>
-          <div class="password-wrapper">
-            <label class="control-label"> Confirm Password </label>
-            <input :type="showConfirmPasswords ? 'text' : 'password'" />
-            <font-awesome-icon
-              :icon="
-                showConfirmPasswords ? ['fas', 'eye-slash'] : ['fas', 'eye']
-              "
-              @click="toggleConfirmPassword"
-            />
-          </div>
           <div class="icon-wrapper" @click="toggleNewUser">
             <p>
               {{ $t("choice-user") }}
@@ -71,7 +62,7 @@
       <div>
         <h2>Pharmacy Data</h2>
         <div class="pharmacy-section">
-          <f-input label="Name" v-model="pharmacyData.pharmacyName" />
+          <f-input label="Name" v-model="pharmacyData.name" />
           <fieldset>
             <legend>Location</legend>
             <MapPicker
@@ -157,10 +148,7 @@
                 <button @click="editPharmacy(index)" class="edit-button">
                   <font-awesome-icon :icon="['fas', 'pen-to-square']" />
                 </button>
-                <button
-                  @click="DeletePharmacy(index)"
-                  class="delete-button"
-                >
+                <button @click="DeletePharmacy(index)" class="delete-button">
                   <font-awesome-icon :icon="['fas', 'trash']" />
                 </button>
               </td>
@@ -177,16 +165,23 @@
 
 
 <script>
+import axiosData from "@/Axios";
 import MapPicker from "@/components/Maps/MapPicker.vue";
 import { useUserStore } from "@/Stores/UserStore";
 export default {
+  props: {
+    users: {
+      type: Array,
+      default: () => [], // Avoid issues when `users` is empty
+    },
+  },
   components: {
     MapPicker,
   },
   data() {
     return {
+      selectedUser: "",
       UserStore: useUserStore(),
-      users:[],
       newUser: false,
       showPasswords: false,
       showConfirmPasswords: false,
@@ -203,7 +198,7 @@ export default {
         pharmacies: [],
       },
       pharmacyData: {
-        pharmacyName: "",
+        name: "",
         location: {
           lat: null,
           lng: null,
@@ -215,10 +210,6 @@ export default {
       },
     };
   },
-  created(){
-    this.UserStore.GetAllUsers();
-    this.users = this.UserStore.allUsers;
-  },
   watch: {
     "groupData.pharmacies": {
       handler(newPharmacies) {
@@ -226,6 +217,9 @@ export default {
       },
       deep: true,
       immediate: true,
+    },
+    users(newUsers) {
+      console.log("Updated users in child component:", newUsers);
     },
   },
   methods: {
@@ -269,7 +263,27 @@ export default {
     },
     editPharmacy(index) {
       this.pharmacyData = this.groupData.pharmacies[index];
-    }
+    },
+    async postGroup() {
+      const data = {
+        name: this.groupData.name,
+        ownerData: {
+          email: this.groupData.ownerData.email,
+          password: this.groupData.ownerData.password,
+          fullName: this.groupData.ownerData.fullName,
+          image: this.groupData.ownerData.image,
+          phoneNumber: this.groupData.ownerData.phoneNumber,
+        },
+        pharmacies: this.groupData.pharmacies,
+      };
+      try {
+        await axiosData.post("/Pharmacy/create-group", data);
+
+        console.log("Payload:", data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 };
 </script>

@@ -38,13 +38,17 @@ export const useUserStore = defineStore("userData", {
         this.loading = false;
       }
     },
-    async GetAllUsers(){
-      try{
-        const response = await axiosData.get('/Users/get-all-users')
-        this.allUsers = response.data.data;
+    async GetAllUsers() {
+      try {
+        this.loading = true;
+        const response = await axiosData.get("/Users/get-all-users");
+        this.allUsers = response.data.data || [];
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching users:", error);
+        this.allUsers = [];
+      } finally {
+        this.loading = false;
       }
-    }
+    },
   },
 });

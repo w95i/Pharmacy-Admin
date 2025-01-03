@@ -31,30 +31,32 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 export default {
   props: {
     label: String,
     note: String,
     value: [String, Number],
-    options: Array,
+    options: {
+      type: Array,
+      default: () => [], // Default to an empty array to avoid errors
+    },
   },
   data() {
     return {
       searchQuery: this.value || "",
-      option: this.options || ["-- No List --"],
-      filteredOptions: [],
-      isFocused: false,
+      filteredOptions: [], // Filtered options based on the search query
+      isFocused: false, // Track focus state of the input
     };
   },
   methods: {
     onInput() {
       this.updateValue(this.searchQuery);
       if (this.searchQuery.trim() === "") {
-        this.filteredOptions = this.option;
+        this.filteredOptions = this.options; // Reset filtered options
       } else {
-        this.filteredOptions = this.option.filter((option) =>
+        this.filteredOptions = this.options.filter((option) =>
           option.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       }
@@ -68,7 +70,7 @@ export default {
     onFocus() {
       this.isFocused = true;
       this.filteredOptions =
-        this.searchQuery.trim() === "" ? this.option : this.filteredOptions;
+        this.searchQuery.trim() === "" ? this.options : this.filteredOptions;
     },
     onBlur() {
       setTimeout(() => {
@@ -86,11 +88,23 @@ export default {
     value(newVal) {
       this.searchQuery = newVal; // Sync changes when parent updates value
     },
+    options: {
+      immediate: true, // Watch the options prop immediately
+      deep: true, // React to changes within the options array
+      handler(newOptions) {
+        console.log("Options prop updated:", newOptions);
+        this.filteredOptions = this.searchQuery
+          ? newOptions.filter((option) =>
+              option.toLowerCase().includes(this.searchQuery.toLowerCase())
+            )
+          : newOptions;
+      },
+    },
   },
 };
 </script>
 
-  <style scoped>
+<style scoped>
 .autocomplete_group {
   display: flex;
   grid-area: field;
@@ -146,27 +160,6 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.autocomplete-list::-webkit-scrollbar {
-  width: 3px;
-  padding: 10px 0;
-}
-
-.autocomplete-list::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgb(255, 255, 255);
-  border-radius: 10px;
-}
-
-.autocomplete-list::-webkit-scrollbar-thumb {
-  background: rgba(93, 136, 255, 0.49);
-  border-radius: 10px;
-  padding: 10px 0;
-}
-
-.autocomplete-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(155, 182, 255, 0.49);
-  border-radius: 10px;
-}
-
 .autocomplete-item {
   padding: 8px;
   cursor: pointer;
@@ -175,11 +168,10 @@ export default {
   background-color: #f1f1f1;
 }
 
-.note_section{
+.note_section {
   margin: 0 5px;
   font-size: 11px;
   color: red;
   font-weight: 600;
 }
 </style>
-  
