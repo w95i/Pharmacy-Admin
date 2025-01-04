@@ -27,9 +27,8 @@ export default {
   created() {
     const userStore = useUserStore();
     userStore.GetAllUsers().then(() => {
-      this.users = userStore.allUsers.map((user) => user.fullName);
-    });
-    console.log('page: ' ,  this.users)
+      this.users = userStore.allUsers;
+    })
   },
 };
 </script>

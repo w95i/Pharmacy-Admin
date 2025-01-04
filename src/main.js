@@ -17,7 +17,7 @@ createApp(App)
 .use(AdminDashboard)
 .use(VueGoogleMaps, {
     load: {
-      key: 'AIzaSyDyOBSe7p7gGFn7DOvEh2tBPX3anlwXOt0',
+      key: 'AIzaSyAgsoJHE4i_F6eiN4tuKLmKWkhmzQlgnOs',
     },
   })
 .mount("#app");

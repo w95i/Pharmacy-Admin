@@ -12,6 +12,7 @@
             note="(if the user is existing)"
             :options="users"
             v-model="selectedUser"
+            @input="setOwnerId"
           />
           <div class="icon-wrapper" @click="toggleNewUser">
             <p>
@@ -133,7 +134,7 @@
               <td>
                 <div class="user-info">
                   <div>
-                    <p>{{ contact.pharmacyName }}</p>
+                    <p>{{ contact.name }}</p>
                   </div>
                 </div>
               </td>
@@ -172,7 +173,7 @@ export default {
   props: {
     users: {
       type: Array,
-      default: () => [], // Avoid issues when `users` is empty
+      default: () => [],
     },
   },
   components: {
@@ -236,11 +237,6 @@ export default {
     toggleConfirmPassword() {
       this.showConfirmPasswords = !this.showConfirmPasswords;
     },
-    handleSubmit() {
-      console.log("Group Name:", this.groupName);
-      console.log("Owner Data:", this.ownerData);
-      console.log("Pharmacy Data:", this.pharmacyData);
-    },
     pushPharmacy() {
       this.groupData.pharmacies = [
         ...this.groupData.pharmacies,
@@ -258,6 +254,16 @@ export default {
         expiryDate: "",
       };
     },
+    setOwnerId(userId) {
+      console.log("Selected User ID:", userId); // Debugging log
+      this.groupData.ownerId = userId; // Set the ownerId
+      const selectedUser = this.users.find((user) => user.id === userId);
+      if (selectedUser) {
+        this.groupData.ownerData.fullName = selectedUser.fullName;
+        this.groupData.ownerData.email = selectedUser.email || "";
+        this.groupData.ownerData.phoneNumber = selectedUser.phone || "";
+      }
+    },
     DeletePharmacy(index) {
       this.groupData.pharmacies.pull(index);
     },
@@ -274,12 +280,12 @@ export default {
           image: this.groupData.ownerData.image,
           phoneNumber: this.groupData.ownerData.phoneNumber,
         },
+        ownerId: this.groupData.ownerId, // Ensure this is included
         pharmacies: this.groupData.pharmacies,
       };
       try {
         await axiosData.post("/Pharmacy/create-group", data);
-
-        console.log("Payload:", data);
+        console.log("Group created successfully");
       } catch (error) {
         console.error(error);
       }

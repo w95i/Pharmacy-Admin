@@ -57,5 +57,10 @@ export default {
 <style scoped>
 .groups_wrapper {
   padding: 45px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 45px;
 }
 </style>

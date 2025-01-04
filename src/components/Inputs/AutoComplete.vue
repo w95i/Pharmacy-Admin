@@ -15,22 +15,23 @@
         placeholder="Select..."
         class="autocomplete-input"
       />
-      <span v-if="!searchQuery && !isFocused" class="dropdown-arrow"
-        ><font-awesome-icon :icon="['fas', 'caret-down']"
-      /></span>
+      <span v-if="!searchQuery && !isFocused" class="dropdown-arrow">
+        <font-awesome-icon :icon="['fas', 'caret-down']" />
+      </span>
       <ul v-if="filteredOptions.length && isFocused" class="autocomplete-list">
         <li
-          v-for="(option, index) in filteredOptions"
-          :key="index"
+          v-for="(option) in filteredOptions"
+          :key="option.id"
           @click="onSelect(option)"
           class="autocomplete-item"
         >
-          {{ option }}
+          {{ option.fullName }}
         </li>
       </ul>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -40,65 +41,52 @@ export default {
     value: [String, Number],
     options: {
       type: Array,
-      default: () => [], // Default to an empty array to avoid errors
+      default: () => [],
     },
   },
   data() {
     return {
-      searchQuery: this.value || "",
-      filteredOptions: [], // Filtered options based on the search query
-      isFocused: false, // Track focus state of the input
+      searchQuery: "", // To display the fullName
+      filteredOptions: [],
+      isFocused: false,
     };
   },
   methods: {
     onInput() {
-      this.updateValue(this.searchQuery);
-      if (this.searchQuery.trim() === "") {
-        this.filteredOptions = this.options; // Reset filtered options
-      } else {
-        this.filteredOptions = this.options.filter((option) =>
-          option.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
-      }
+      this.filteredOptions = this.searchQuery.trim()
+        ? this.options.filter((option) =>
+            option.fullName.toLowerCase().includes(this.searchQuery.toLowerCase())
+          )
+        : this.options;
     },
     onSelect(option) {
-      this.searchQuery = option;
-      this.filteredOptions = [];
+      this.searchQuery = option.fullName; // Display fullName in input
       this.isFocused = false;
-      this.updateValue(option);
+      this.filteredOptions = [];
+      this.updateValue(option.id); // Emit the id as the value
     },
     onFocus() {
       this.isFocused = true;
-      this.filteredOptions =
-        this.searchQuery.trim() === "" ? this.options : this.filteredOptions;
+      this.filteredOptions = this.searchQuery.trim()
+        ? this.options.filter((option) =>
+            option.fullName.toLowerCase().includes(this.searchQuery.toLowerCase())
+          )
+        : this.options;
     },
     onBlur() {
       setTimeout(() => {
         this.isFocused = false;
-        if (!this.searchQuery) {
-          this.filteredOptions = [];
-        }
       }, 150);
     },
     updateValue(value) {
-      this.$emit("input", value); // Emit the 'input' event to the parent
+      this.$emit("input", value);
     },
   },
   watch: {
     value(newVal) {
-      this.searchQuery = newVal; // Sync changes when parent updates value
-    },
-    options: {
-      immediate: true, // Watch the options prop immediately
-      deep: true, // React to changes within the options array
-      handler(newOptions) {
-        console.log("Options prop updated:", newOptions);
-        this.filteredOptions = this.searchQuery
-          ? newOptions.filter((option) =>
-              option.toLowerCase().includes(this.searchQuery.toLowerCase())
-            )
-          : newOptions;
-      },
+      console.log("Value changed to:", newVal);
+      const selectedOption = this.options.find((option) => option.id === newVal);
+      this.searchQuery = selectedOption ? selectedOption.fullName : "";
     },
   },
 };

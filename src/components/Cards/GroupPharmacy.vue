@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div v-if="loading" class="loading-container">
       <img
         src="@/assets/Images/Logo-36-300.png"
@@ -50,7 +49,6 @@
         </p>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
