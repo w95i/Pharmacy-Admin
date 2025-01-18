@@ -36,6 +36,11 @@ const routes = [
     ],
   },
   {
+    path: "/categories",
+    name: "categories",
+    component: () => import("@/views/CategoriesView.vue"),
+  },
+  {
     path: "/map",
     name: "Map",
     component: () => import('@/views/mapView.vue'),

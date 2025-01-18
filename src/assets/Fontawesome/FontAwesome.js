@@ -33,6 +33,7 @@ import { faGears } from '@fortawesome/free-solid-svg-icons'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
 import { faX } from '@fortawesome/free-solid-svg-icons'
 import { faHospital } from '@fortawesome/free-solid-svg-icons'
+import { faIcons } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 
@@ -71,4 +72,5 @@ library.add(faGears)
 library.add(faBell)
 library.add(faX)
 library.add(faHospital)
+library.add(faIcons)
 export { FontAwesomeIcon }
