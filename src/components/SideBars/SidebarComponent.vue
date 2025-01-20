@@ -140,6 +140,7 @@ export default {
             { label: "create-pharmacy", path: "/pharmacy/create-group" },
           ],
         },
+        { label: "categories", path: "/categories", icon: ['fas', 'icons'], },
         { label: "Front Pages", path: "/map", icon: "📄" },
         { label: "Contact", path: "/contact", icon: "📦", badge: "2" },
         {
