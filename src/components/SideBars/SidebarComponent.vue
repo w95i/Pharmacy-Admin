@@ -117,7 +117,7 @@ export default {
   },
   name: "SidebarComponent",
   props: {
-    isCollapsed: Boolean, // Controlled by parent component
+    isCollapsed: Boolean,
   },
   data() {
     return {
@@ -150,9 +150,6 @@ export default {
             { label: "Detail", path: "/blog/detail" },
           ],
         },
-        { label: "Notes", path: "/notes", icon: "📝" },
-        { label: "Calendar", path: "/calendar", icon: "📅" },
-        { label: "Email", path: "/email", icon: "📧" },
       ],
     };
   },
