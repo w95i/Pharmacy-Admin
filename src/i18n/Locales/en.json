@@ -20,6 +20,8 @@
   "submit" : "Submit",
   "delete-pharmacy" : "Delete Pharmacy",
   "description-delete" : "Are you sure you want to delete this pharmacy?",
+  "delete-category" : "Delete Category",
+  "description-delete-category" : "Are you sure you want to delete this Category?",
   "yes" : "Yes",
   "no" : "No",
   "update" : "Update",
